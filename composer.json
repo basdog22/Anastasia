@@ -14,9 +14,7 @@
         }
     ],
 
-    "require": {
-        "basdog22/anastasia": "dev-master"
-    },
+
     "autoload": {
         "classmap": [
             "lp-includes/app/commands",
