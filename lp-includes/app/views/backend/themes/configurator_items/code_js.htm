@@ -1,0 +1,39 @@
+{{ Form::label($name,ucwords(str_replace('_',' ',$name)),['class'=>'label label-info']) }}
+<div class="clearfix">&nbsp;</div>
+{{ Form::hidden($name, $value,array('id'=>'js_contents')) }}
+<div id="jseditor" class="aceeditor" onChange="jsupdate()">{{{$value}}}</div>
+{{ HTML::script(Config::get("settings.cms.rel_includes").'/packages/anastasia/ace/src-noconflict/ace.js') }}
+<script>
+
+    ace.require("ace/ext/language_tools");
+    var jseditor = ace.edit("jseditor");
+    jseditor.setTheme("ace/theme/github");
+    (function () {
+        jseditor.session.setMode('ace/mode/js');
+        jseditor.setOptions({
+            enableBasicAutocompletion: true,
+            enableSnippets: true,
+            enableLiveAutocompletion: false
+        });
+        jseditor.session.on('change', function() {
+            jsupdate()
+        });
+        // add command to lazy-load keybinding_menu extension
+        jseditor.commands.addCommand({
+            name: "showKeyboardShortcuts",
+            bindKey: {win: "Ctrl-Alt-h", mac: "Command-Alt-h"},
+            exec: function(jseditor) {
+                ace.config.loadModule("ace/ext/keybinding_menu", function(module) {
+                    module.init(jseditor);
+                    jseditor.showKeyboardShortcuts()
+                })
+            }
+        })
+    }());
+    function jsupdate(){
+        console.info(jseditor.getValue());
+        var ace = jseditor.getValue();
+        var divecho = document.getElementById("js_contents");
+        divecho.value=ace
+    }
+</script>

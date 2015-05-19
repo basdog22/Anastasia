@@ -1,0 +1,10 @@
+<div class="row">
+    <div class="col-lg-8 col-lg-offset-2">
+        {{ Form::open(array('url'=>'backend/tinymce/save', 'class'=>'form-edituser')) }}
+        <h2 class="form-signin-heading">{{ t('strings.settings') }}</h2>
+        {{ Form::hidden('namespace', 'cms') }}
+        {{ Form::select('plugins[]', $plugins,$selplugins,['multiple'=>true]) }}
+        {{ Form::submit(t('strings.save_settings'), array('class'=>'btn btn-large btn-primary'))}}
+        {{ Form::close() }}
+    </div>
+</div>

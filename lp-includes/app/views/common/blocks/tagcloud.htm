@@ -1,0 +1,3 @@
+@foreach($blockdata as $k=>$tag)
+    <a href="{{url('/tag/'.$tag->slug)}}" class="tag label label-info" title="{{$tag->count}} items" style="font-size:{{ ($tag->count+10) }}px">{{$tag->name}}</a>
+@endforeach

@@ -1,0 +1,29 @@
+@foreach($params as $k=>$param)
+<div class="removeme row">
+    <div class="col-md-6">
+        {{ Form::label(t('strings.image')) }}
+        {{ Form::select('params['.$k.'][img]',$data,array($param['img'])) }}
+    </div>
+    <div class="col-md-6">
+        {{ Form::label(t('strings.url')) }}
+        {{ Form::text('params['.$k.'][url]', $param['url'], array('class'=>'form-control', 'placeholder'=>t('strings.url'))) }}
+        {{ Form::label(t('strings.title')) }}
+        {{ Form::text('params['.$k.'][caption]', $param['caption'], array('class'=>'form-control', 'placeholder'=>t('strings.title'))) }}
+    </div>
+</div>
+<hr/>
+@endforeach
+<div class="clearfix"><label class="label label-info">{{t('strings.new')}} {{t('strings.image')}}</label> </div>
+<div class="cloneme removeme row">
+    <div class="col-md-6">
+        {{ Form::label(t('strings.image')) }}
+        {{ Form::select('params['.time().'][img]',$data) }}
+    </div>
+    <div class="col-md-6">
+        {{ Form::label(t('strings.url')) }}
+        {{ Form::text('params['.time().'][url]', null, array('class'=>'form-control', 'placeholder'=>t('strings.url'))) }}
+        {{ Form::label(t('strings.title')) }}
+        {{ Form::text('params['.time().'][caption]', '', array('class'=>'form-control', 'placeholder'=>t('strings.title'))) }}
+    </div>
+
+</div>

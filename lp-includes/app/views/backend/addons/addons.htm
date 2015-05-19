@@ -1,0 +1,67 @@
+<div class="row">
+    <div class="col-xs-12">
+        <div class="box">
+            <div class="box-header">
+                <div class="box-name">
+                    <i class="fa fa-cogs"></i>
+                    <span>{{ t('strings.addons') }}</span>
+                    <span><input type="checkbox" class="checkall"></span>
+                </div>
+                <div class="box-icons">
+                    <a href="{{url('addons/new')}}" class="modal-link" style="width: auto">
+                        <i class="fa fa-plus"></i>
+                        {{ t('strings.new_addon') }}
+                    </a>
+                    <select class="bulk_actions no-select2">
+                        <option value="0">{{t('strings.with_selected')}}</option>
+                    </select>
+                </div>
+                <div class="no-move"></div>
+            </div>
+            <div class="box-content no-padding clearfix" id="actions_container" data-base="{{url('addons/manage')}}" data-actions="install,uninstall">
+                @foreach ($addons as $theme)
+                <div class="box col-md-3 no-padding widget-box ">
+                    <div class="box-header">
+                        <div class="box-name">
+                            <span class="ttips" title="{{$theme->title}}"><i class="fa fa-info"></i> {{$theme->name}}</span>
+                        </div>
+                        <div class="box-icons" >
+                            <span title="{{ t('strings.version') }}" class="ttips badge bg-primary">v{{ $theme->version }}</span>
+                            <span title="{{ t('strings.installed') }}" class="ttips badge bg-{{ ($theme->installed)?'success':'danger' }}"><i class="fa fa-{{ ($theme->installed)?'check':'close' }}"></i> </span>
+
+                            <input type="checkbox" class="checkme checkbox-inline" value="{{ $theme->id }}">
+
+                        </div>
+                    </div>
+                    <div class="box-content scrollbars">
+                        <a target="_blank" href="{{ url($theme->url) }}" style="display:block;background: url('{{ $theme->image }}');background-size:100%;width: 100%; height: 200px" ></a>
+                    </div>
+                    <div class="box-footer">
+                        <div class="btn-group">
+                            @if($theme->installed && $theme->mainpage_route)
+                            @if($theme->mainpage_route!=Config::get('settings.cms.main_controller')."@".Config::get('settings.cms.main_controller_function'))
+                            <a class="btn btn-{{ 'info' }}" href="{{url('addons/setdefault/'.$theme->id)}}">
+                                {{ t('strings.set_default_page') }}
+                            </a>
+                            @endif
+                            @endif
+                            <a class="btn btn-warning" href="{{ url('addons/edit/'.$theme->id) }}">
+                                {{ t('strings.edit') }}
+                            </a>
+                            <a class="btn btn-{{ ($theme->installed)?'danger':'success' }}"
+                               href="{{ ($theme->installed)?url('addons/uninstall/'.$theme->id):url('addons/install/'.$theme->id)}}">
+                                {{ ($theme->installed)?t('strings.uninstall'):t('strings.install')
+                                }}
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                @endforeach
+            </div>
+            <div class="box-footer">
+
+            </div>
+        </div>
+    </div>
+</div>
+

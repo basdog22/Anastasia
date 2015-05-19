@@ -1,0 +1,51 @@
+
+<div class="row">
+    <div class="col-lg-8 col-lg-offset-2">
+        {{ Form::open(array('url'=>'backend/tasks/new', 'class'=>'form-newmenu')) }}
+        <h2 class="form-signin-heading">{{ t('strings.new_task') }}</h2>
+
+        {{ Form::text('title', null, array('class'=>'form-control', 'placeholder'=>t('strings.title'))) }}
+        {{ Form::textarea('description', null , array('class'=>'form-control', 'placeholder'=>t('strings.content'))) }}
+
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="col-lg-6">
+                    {{ Form::label(t('strings.start_date')) }}
+                    {{ Form::input('date','start_date', null, array('class'=>'form-control datepicker', 'placeholder'=>t('strings.start_date'))) }}
+                </div>
+                <div class="col-lg-6">
+                    {{ Form::label(t('strings.start_time')) }}
+
+                    {{ Form::input('time','start_time', date('H:i:s',time()), array('class'=>'form-control timepicker', 'placeholder'=>t('strings.start_time'))) }}
+
+
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="col-lg-6">
+                    {{ Form::label(t('strings.end_date')) }}
+                    {{ Form::input('date','end_date', null, array('class'=>'form-control datepicker', 'placeholder'=>t('strings.end_date'))) }}
+                </div>
+                <div class="col-lg-6">
+                    {{ Form::label(t('strings.end_time')) }}
+                    {{ Form::input('time','end_time', date('H:i:s',time()), array('class'=>'form-control timepicker', 'placeholder'=>t('strings.end_time'))) }}
+                </div>
+            </div>
+        </div>
+
+
+        {{ Form::label(t('strings.assign_to_user')) }}
+        <select name="user_id" class="">
+            <option selected value="{{Auth::id()}}">{{ t('strings.me',['fullname'=>\Auth::user()->full_name]) }}</option>
+            @foreach($users as $user)
+            <option value="{{ $user->id }}">{{ $user->full_name }}</option>
+            @endforeach
+        </select>
+
+        {{ Form::submit(t('strings.add'), array('class'=>'btn btn-large btn-primary'))}}
+        {{ Form::close() }}
+    </div>
+
+</div>

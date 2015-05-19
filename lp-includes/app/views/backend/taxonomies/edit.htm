@@ -1,0 +1,19 @@
+
+    <div class="row">
+        <div class="col-lg-8 col-lg-offset-2">
+            {{ Form::open(array('url'=>'backend/taxonomies/edit', 'class'=>'form-newmenu')) }}
+            <h2 class="form-signin-heading">{{ t('strings.new_taxonomy') }}</h2>
+            {{ Form::hidden('tax_id',$taxonomy->id) }}
+            {{ Form::text('title', $taxonomy->title, array('class'=>'form-control', 'placeholder'=>t('strings.menu_title'))) }}
+            {{ Form::text('name', $taxonomy->name , array('class'=>'form-control', 'placeholder'=>t('strings.menu_name'))) }}
+            {{ Form::label(t('strings.sub_taxonomy')) }}
+            <select name="parent" class="">
+                <option selected value="0">{{ t('strings.please_select') }}</option>
+                {{$taxonomies}}
+            </select>
+            {{ Form::submit(t('strings.save'), array('class'=>'btn btn-large btn-primary'))}}
+            {{ Form::close() }}
+        </div>
+
+    </div>
+

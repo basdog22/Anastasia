@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<addon>
+	<name>posts</name>
+	<title>Posts Content Type</title>
+	<mainpage_route>PostsController@mainpage</mainpage_route>
+	<image>http://laravel.com/assets/img/laravel-logo.png</image>
+	<version>1.0</version>
+	<author>bonweb.gr</author>
+	<url>http://www.bonweb.gr</url>
+</addon>

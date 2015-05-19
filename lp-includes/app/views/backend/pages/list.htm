@@ -1,0 +1,73 @@
+<div class="row">
+    <div class="col-xs-12">
+        <div class="box">
+            <div class="box-header">
+                <div class="box-name">
+                    <i class="fa fa-cogs"></i>
+                    <span>{{ t('strings.pages') }}</span>
+                </div>
+                <div class="box-icons col-sm-9">
+                    <span class="pull-right col-sm-3">
+                        <a href="{{url('backend/pages/new')}}">
+                            <i class="fa fa-plus"></i>
+                            <span>{{ t('strings.new_page') }}</span>
+                        </a>
+                    </span>
+                </div>
+                <div class="no-move"></div>
+            </div>
+            <div class="box-content no-padding">
+                {{ $pages->links() }}
+                <table class="table table-bordered table-striped table-hover table-heading table-datatable" id="addonstable">
+                    <thead>
+                    <tr>
+                        <th><input type="checkbox" class="checkall"></th>
+                        <th>{{ t('strings.title') }}</th>
+                        <th>{{ t('strings.status') }}</th>
+                        <th>{{ t('strings.created_at') }}</th>
+                        <th>{{ t('strings.updated_at') }}</th>
+                        <th id="actions_container" data-base="{{url('backend/pages')}}" data-actions="edit,delete">{{ t('strings.actions') }}</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    @foreach ($pages as $post)
+                    <tr>
+                        <td><input type="checkbox" class="checkme" value="{{ $post->id }}"></td>
+                        <td><a href="{{ url('backend/pages/edit/'.$post->id) }}">{{ $post->title }}</a></td>
+                        <td>{{ ($post->status)?t('strings.published'):t('strings.draft') }}</td>
+                        <td>{{ $post->created_at }}</td>
+                        <td>{{ $post->updated_at }}</td>
+                        <td>
+                            <div class="btn-group">
+                                <a class="btn btn-default modal-link" href="{{ url('backend/pages/edit/'.$post->id) }}">{{ t('strings.edit') }}</a>
+                                <a class="btn btn-danger delbtn" href="{{ url('backend/pages/delete/'.$post->id) }}">{{ t('strings.delete') }}</a>
+                            </div>
+                        </td>
+                    </tr>
+                    @endforeach
+
+
+                    <!-- End: list_row -->
+                    </tbody>
+                    <tfoot>
+                    <tr>
+                        <th><input type="checkbox" class="checkall"></th>
+                        <th>{{ t('strings.title') }}</th>
+                        <th>{{ t('strings.status') }}</th>
+                        <th>{{ t('strings.created_at') }}</th>
+                        <th>{{ t('strings.updated_at') }}</th>
+                        <th>{{ t('strings.actions') }}</th>
+                    </tr>
+                    </tfoot>
+                </table>
+                {{ $pages->links() }}
+            </div>
+            <div class="box-footer">
+                <select class="bulk_actions no-select2">
+                    <option value="0">{{t('strings.with_selected')}}</option>
+                </select>
+            </div>
+        </div>
+    </div>
+</div>
+

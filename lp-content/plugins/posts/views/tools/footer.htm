@@ -1,0 +1,40 @@
+<script>
+    jQuery(document).ready(function($){
+        $("#addtag").click(function(e){
+            var pid = $(this).data('pid');
+            var tags = ($("#tags").val()!='')?$("#tags").val().split(','):false;
+            if(tags){
+                $.get(lara.cms.url+'/backend/posts/attach',{
+                    tags: tags,
+                    post_id: pid
+                },function(response){
+                    var html = '';
+                    for(i=0;i<response.length;i++){
+                        html += "<label class='label label-info'>"+response[i]+" <a href='#' class='fa fa-close dettach' data-pid='"+pid+"' data-tag='"+response[i]+"'></a></label>";
+                    }
+                    $("#tags_container").html(html);
+                    $("#tags").val('');
+                },'json');
+                return false;
+            }
+
+        });
+
+        $(document).on('click','.dettach',function(e){
+            var pid = $(this).data('pid');
+            var tag = $(this).data('tag');
+            $.get(lara.cms.url+'/backend/posts/dettach',{
+                tag: tag,
+                post_id: pid
+            },function(response){
+                var html = '';
+                for(i=0;i<response.length;i++){
+                    html += "<label class='label label-info'>"+response[i]+" <a href='#' class='fa fa-close dettach' data-pid='"+pid+"' data-tag='"+response[i]+"'></a></label>";
+                }
+                $("#tags_container").html(html);
+                $("#tags").val('');
+            },'json');
+            return false;
+        });
+    });
+</script>

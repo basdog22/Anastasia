@@ -1,0 +1,75 @@
+{{ Form::open(array('url'=>'backend/pages/bulk', 'class'=>'form-newpage')) }}
+<div class="clearfix"></div>
+{{ Form::submit(t('strings.save'), array('class'=>'btn btn-large btn-primary'))}}
+<div class="clearfix"></div>
+@foreach($pages as $post)
+<div class="row">
+
+    <div class="col-md-9">
+        <div class="col-md-12 box widget-box">
+            <div class="box-header handle">
+                <div class="box-name">
+                    <span>
+
+                        {{ t('strings.edit') }}
+
+                    </span>
+                </div>
+            </div>
+            <div class="box-content">
+                {{ Form::label(t('strings.title')) }}
+                {{ Form::text("pages[$post->id][title]", $post->title, array('class'=>'form-control', 'placeholder'=>t('strings.title'))) }}
+                <div class="clearfix">&nbsp;</div>
+                {{ Form::label(t('strings.slug')) }}: <span class="small">{{home_url()}}/</span>
+                {{ Form::text("pages[$post->id][slug]", $post->slug, array('class'=>'small-input small incognito','placeholder'=>t('strings.slug'))) }}
+                <div class="clearfix">&nbsp;</div>
+                {{ Form::label(t('strings.content')) }}
+                {{ Form::textarea("pages[$post->id][content]", $post->content , array('class'=>'form-control','id'=>'post-content', 'placeholder'=>t('strings.content'))) }}
+            </div>
+        </div>
+
+    </div>
+    <div class="col-md-3">
+        <div class="row">
+            <div class="col-md-11 box widget-box">
+                <div class="box-header handle">
+                    <div class="box-name">
+                        <span>{{ t('posts::strings.publish') }}</span>
+                    </div>
+                    <div class="box-icons">
+                        <a href="#" class="move-activ"><i class="fa fa-arrows "></i></a>
+                    </div>
+                </div>
+                <div class="box-content">
+                    {{ Form::label(t('strings.status')) }}
+                    {{ Form::checkbox("pages[$post->id][status]", 1,($post->status=='1')?true:false) }}
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-11 box widget-box">
+                <div class="box-header handle">
+                    <div class="box-name">
+                        <span>{{ t('strings.layout') }}</span>
+                    </div>
+                    <div class="box-icons">
+                        <a href="#" class="move-activ"><i class="fa fa-arrows "></i></a>
+                    </div>
+                </div>
+                <div class="box-content">
+                    <select name="pages[{{$post->id}}][layout]" class="">
+                        <option selected value="0">{{ t('strings.please_select') }}</option>
+                        @foreach ($layouts as $v)
+                        @foreach ($v as $key => $layout)
+                        <option @if(isset($post->layout)) @if($post->layout==$layout['name']) selected @endif  @endif value="{{$layout['name']}}">{{t($layout['title'])}}</option>
+                        @endforeach
+                        @endforeach
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@endforeach
+{{ Form::close() }}

@@ -1,0 +1,26 @@
+
+<div class="row">
+    <div class="col-lg-8 col-lg-offset-2">
+        {{ Form::open(array('url'=>'users/adduser', 'class'=>'form-newmenu')) }}
+        <h2 class="form-signin-heading">{{ t('strings.new_user') }}</h2>
+        {{ Form::label(t('strings.firstname')) }}
+        {{ Form::text('firstname', null, array('class'=>'form-control', 'placeholder'=>t('strings.firstname'))) }}
+        {{ Form::label(t('strings.lastname')) }}
+        {{ Form::text('lastname', null , array('class'=>'form-control', 'placeholder'=>t('strings.lastname'))) }}
+        {{ Form::label(t('strings.email')) }}
+        {{ Form::email('email', null , array('class'=>'form-control', 'placeholder'=>t('strings.email'))) }}
+        {{ Form::label(t('strings.user_group')) }}
+        <select name="user_group">
+            @foreach($groups as $group)
+            <option value="{{$group->id}}" @if($group->name=='Member') selected @endif >{{$group->name}}</option>
+            @endforeach
+        </select>
+        {{ Form::label(t('strings.password')) }}
+        {{ Form::password('password', null , array('class'=>'form-control', 'placeholder'=>t('strings.password'))) }}
+
+        {{ Form::submit(t('strings.add_user'), array('class'=>'btn btn-large btn-primary'))}}
+        {{ Form::close() }}
+    </div>
+
+</div>
+

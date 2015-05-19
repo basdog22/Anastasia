@@ -1,0 +1,67 @@
+<div class="row">
+    <div class="col-lg-10">
+        {{ Form::open(array('url'=>'addons/edit/save','id'=>'fileform', 'class'=>'form-newmenu')) }}
+        {{ Form::hidden('filepath', $filepath) }}
+        {{ Form::hidden('addonid', $addon->id) }}
+        {{ Form::hidden('filecontents', $filecontents,array('id'=>'filecontents')) }}
+        <div class="clearfix" style="height: 550px">
+            <pre id="aceeditor">{{{$filecontents}}}</pre>
+        </div>
+        <div class="btn-toolbar">
+            {{ Form::button(t('strings.save'), array('onclick'=>'$("#filecontents").val(editor.getValue());$("#fileform").submit()','class'=>'btn btn-large btn-primary'))}}
+        </div>
+        {{ Form::close() }}
+        <fieldset><legend>{{t('strings.help')}}</legend>
+        <p>Ctrl+Alt+h = {{t('strings.show_editor_shortcuts')}}</p>
+        </fieldset>
+    </div>
+    <div class="col-lg-2" style="height: 700px;overflow: auto">
+        <ul class="nav nav-stacked">
+            @foreach($files as $dir=>$file)
+            <li class="folder-link"><i class="fa fa-folder-o"></i> <strong>{{$dir}}</strong>
+                @if(is_array($file))
+                <ul>
+                    @foreach($file as $filename)
+                    <li @if(Config::get('settings.cms.content').'/plugins/'.$dir.$filename==$filepath) class='lactive' @endif style="display: block"><i class="fa fa-file-o"></i> <a href="{{ url('addons/edit/'.$addon->id.'/'.str_replace('/','\\',$dir).$filename) }}">{{ $filename }}</a></li>
+                    @endforeach
+                </ul>
+
+                @endif
+
+            </li>
+            @endforeach
+        </ul>
+    </div>
+</div>
+{{ HTML::script(Config::get("settings.cms.rel_includes").'/packages/anastasia/ace/src-noconflict/ace.js') }}
+{{ HTML::script(Config::get("settings.cms.rel_includes").'/packages/anastasia/ace/src-noconflict/ext-modelist.js') }}
+<script>
+    ace.require("ace/ext/language_tools");
+    var editor = ace.edit("aceeditor");
+    editor.setTheme("ace/theme/github");
+    (function () {
+        var modelist = ace.require("ace/ext/modelist");
+        var filePath = "{{$filepath}}";
+        var mode = modelist.getModeForPath(filePath).mode;
+        editor.session.setMode(mode);
+        editor.setOptions({
+            enableBasicAutocompletion: true,
+            enableSnippets: true,
+            enableLiveAutocompletion: false
+        });
+        // add command to lazy-load keybinding_menu extension
+        editor.commands.addCommand({
+            name: "showKeyboardShortcuts",
+            bindKey: {win: "Ctrl-Alt-h", mac: "Command-Alt-h"},
+            exec: function(editor) {
+                ace.config.loadModule("ace/ext/keybinding_menu", function(module) {
+                    module.init(editor);
+                    editor.showKeyboardShortcuts()
+                })
+            }
+        })
+    }());
+
+
+
+</script>

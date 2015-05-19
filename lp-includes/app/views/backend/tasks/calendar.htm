@@ -1,0 +1,26 @@
+<div class="row">
+    <div class="col-xs-12">
+        <div class="box">
+            <div class="box-header">
+                <div class="box-name">
+                    <i class="fa fa-cogs"></i>
+                    <span>{{ t('strings.tasks') }}</span>
+                </div>
+                <div class="box-icons">
+                    <a href="{{url('backend/tasks/new')}}" class="modal-link" style="width: auto">
+                        <i class="fa fa-plus"></i>
+                        {{ t('strings.new_task') }}
+                    </a>
+
+                </div>
+                <div class="no-move"></div>
+            </div>
+            <div class="box-content no-padding">
+
+                {{show_calendar($tasks,['editable'=>1],['eventClick'=>'function(calEvent, jsEvent, view){taskviewer(calEvent, jsEvent, view)}'])}}
+
+            </div>
+        </div>
+    </div>
+</div>
+

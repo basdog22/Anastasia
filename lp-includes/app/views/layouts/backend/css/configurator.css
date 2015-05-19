@@ -1,0 +1,41 @@
+.configurator-sidebar{
+    background: url("/lp-includes/app/views/layouts/backend/img/devoops_pattern_b10.png") repeat scroll 0 0 #6aa6d6;
+    color: #525252;
+    height: 100%;
+    overflow: auto;
+    position: fixed;
+    padding: 15px;
+    box-sizing: border-box;
+    width: 320px;
+}
+
+.config_item{
+    padding:  5px 0;
+    box-sizing: border-box;
+}
+
+.config_item label{
+    float: left;
+    display: inline-block;
+    width: 25%;
+    white-space: normal;
+    font-size: 10px;
+    min-height: 23px;
+}
+.config_item input,.config_item select{
+    float: left;
+    width: 74%;
+    margin-left: 1%;
+    display: inline-block;
+    font-size: 12px;
+}
+.aceeditor {
+    margin: 0;
+    position: relative;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 200px;
+    width: 100%;
+}

@@ -1,0 +1,73 @@
+<!--<div class="row">-->
+
+    <!--<div class="col-lg-8 col-lg-offset-2">-->
+        <!--{{ Form::open(array('url'=>'backend/blockmanager/addblock', 'class'=>'form-newmenu')) }}-->
+        <!--<h2 class="form-signin-heading">{{ t('strings.addblock') }}</h2>-->
+        <!--{{ Form::hidden('grid',$grid) }}-->
+        <!--{{ Form::hidden('position',$position) }}-->
+        <!--{{ Form::hidden('layout',$layout) }}-->
+        <!--{{ Form::label(t('strings.blocks')) }}-->
+        <!--<select class="view-select" name="block_title">-->
+            <!--<option disabled selected value="0">{{ t('strings.please_select') }}</option>-->
+            <!--@foreach($blocks as $k=>$v)-->
+            <!--@foreach($v as $block)-->
+            <!--<option value="{{ $block['name'] }}">{{$block['title']}}</option>-->
+            <!--@endforeach-->
+            <!--@endforeach-->
+        <!--</select>-->
+        <!--{{ Form::submit(t('strings.add'), array('class'=>'btn btn-large btn-primary'))}}-->
+        <!--{{ Form::close() }}-->
+    <!--</div>-->
+
+<!--</div>-->
+
+<div class="row">
+    <div class="col-md-12 clearfix">
+        <div class="tabable" id="tabs">
+            <ul>
+
+                <li><a style="padding-right: 30px" href="#existing">{{ t('strings.please_select') }}</a></li>
+                <li><a style="padding-right: 30px" href="#newblock">{{ t('strings.add') }}</a></li>
+
+            </ul>
+
+            <div id="existing" style="height: 500px;overflow: auto">
+                {{ Form::open(array('url'=>'backend/blockmanager/addblock', 'class'=>'form-newmenu')) }}
+                {{ Form::hidden('grid',$grid) }}
+                {{ Form::hidden('position',$position) }}
+                {{ Form::hidden('layout',$layout) }}
+                {{ Form::hidden('existing','1') }}
+                @foreach($existing as $block)
+                <button type="submit" value="{{$block->id}}" name="blockid" class="col-xs-3 col-sm-2">
+                    @if(isset(get_block_info($block->name)['icon']))
+                    <img src="{{get_block_info($block->name)['icon']}}" /><br/>
+                    @else
+                    <i class="fa fa-cog fa-3x"></i><br/>
+                    @endif
+                    {{t($block->title)}}
+                </button>
+                @endforeach
+                {{ Form::close() }}
+            </div>
+            <div id="newblock">
+                {{ Form::open(array('url'=>'backend/blockmanager/addblock', 'class'=>'form-newmenu')) }}
+                <h2 class="form-signin-heading">{{ t('strings.addblock') }}</h2>
+                {{ Form::hidden('grid',$grid) }}
+                {{ Form::hidden('position',$position) }}
+                {{ Form::hidden('layout',$layout) }}
+                {{ Form::label(t('strings.blocks')) }}
+                <select class="view-select" name="block_title">
+                    <option disabled selected value="0">{{ t('strings.please_select') }}</option>
+                    @foreach($blocks as $k=>$v)
+                    @foreach($v as $block)
+                    <option value="{{ $block['name'] }}">{{$block['title']}}</option>
+                    @endforeach
+                    @endforeach
+                </select>
+                {{ Form::submit(t('strings.add'), array('class'=>'btn btn-large btn-primary'))}}
+                {{ Form::close() }}
+            </div>
+        </div>
+    </div>
+</div>
+

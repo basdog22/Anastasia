@@ -1,0 +1,33 @@
+<p class="text-muted">Register to our newsletters and keep in touch with Anastasia APP</p>
+<p class="alert-success"></p>
+<p class="alert-warning"></p>
+<form class="newsletter-signup" role="form" >
+    <div class="input-group">
+        <input type="email" class="form-control" id="email" placeholder="contact@yourdomain.com" required>
+        <span class="input-group-btn">
+          <input type="submit" class="btn btn-default btn-sand" value="subscribe">
+        </span>
+    </div><!-- /input-group -->
+</form>
+<p class="text-muted">Don't worry! No spam here!</p>
+
+<script>
+    jQuery(document).ready(function($) {
+        "use strict";
+// --------------Newsletter-----------------------
+        $(".newsletter-signup").ajaxChimp({
+            callback: mailchimpResponse,
+            url: "" // Replace your mailchimp post url inside double quote "".
+        });
+
+        function mailchimpResponse(resp) {
+            if(resp.result === 'success') {
+
+                $('.alert-success').html(resp.msg).fadeIn().delay(3000).fadeOut();
+
+            } else if(resp.result === 'error') {
+                $('.alert-warning').html(resp.msg).fadeIn().delay(3000).fadeOut();
+            }
+        };
+    });
+</script>

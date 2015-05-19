@@ -1,0 +1,24 @@
+<div class="row">
+    <div class="col-md-12">
+        <div class="col-md-5">
+            {{ Form::open(array('url'=>'backend/dobackup', 'class'=>'form-newmenu')) }}
+            <button type="submit" class="btn btn-app btn-large btn-success ttips" title="{{t('strings.generate_backup')}}">
+                <i class="fa fa-archive "></i>
+            </button>
+            {{ Form::close() }}
+        </div>
+        @if(count($points))
+        <div class="col-md-2">
+            {{t('strings.or')}}
+        </div>
+        <div class="col-md-5">
+            {{ Form::open(array('url'=>'backend/dorestore', 'class'=>'form-newmenu')) }}
+            {{ Form::select('point',$points) }}
+            {{ Form::submit(t('strings.restore_to_point'), array('class'=>'btn btn-large btn-primary warnbtn'))}}
+            {{ Form::close() }}
+        </div>
+        @endif
+
+    </div>
+
+</div>

@@ -1,0 +1,16 @@
+{{ Form::label(t('strings.content')) }}
+{{ Form::textarea('params[text]',$params['text'],['class'=>'tinyrte']) }}
+<script>
+    tinymce.init({
+        selector: "textarea.tinyrte",
+        relative_urls: false,
+        remove_script_host: false,
+        plugins: [
+            "image link code media loadfile shortcodes template"
+        ],
+        menubar:false,
+        statusbar: false,
+        toolbar: "image link shortcodes template | bold italic | alignleft aligncenter alignright bullist numlist | code"
+    });
+
+</script>

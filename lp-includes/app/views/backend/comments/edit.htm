@@ -1,0 +1,47 @@
+<div class="row">
+    {{ Form::open(array('url'=>'backend/comments/edit', 'class'=>'form-newpage')) }}
+    <div class="col-md-9">
+        <div class="col-md-12 box widget-box">
+            <div class="box-header handle">
+                <div class="box-name">
+                    <span>
+                        {{ t('strings.edit') }}
+                    </span>
+                </div>
+            </div>
+            <div class="box-content">
+                {{ Form::hidden('comment_id', $comment->id) }}
+                {{ Form::label(t('strings.title')) }}
+                {{ Form::text('title', $comment->title, array('class'=>'form-control', 'placeholder'=>t('strings.title'))) }}
+                {{ Form::label(t('strings.content')) }}
+                {{ Form::textarea('body', $comment->body , array('class'=>'form-control rte','id'=>'post-content', 'placeholder'=>t('strings.content'))) }}
+                
+            </div>
+
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="row">
+            <div class="col-md-11 box widget-box">
+                <div class="box-header handle">
+                    <div class="box-name">
+                        <span>{{ t('strings.publish') }}</span>
+                    </div>
+                    <div class="box-icons">
+                        <a href="#" class="move-activ"><i class="fa fa-arrows "></i></a>
+                    </div>
+                </div>
+                <div class="box-content">
+                    {{ Form::label(t('strings.status')) }}
+                    {{ Form::checkbox('status', 1,($comment->status=='1')?true:false) }}
+                    <div class="clearfix"></div>
+                    {{ Form::submit(t('strings.save'), array('class'=>'btn btn-large btn-primary'))}}
+                </div>
+            </div>
+        </div>
+
+
+
+    </div>
+    {{ Form::close() }}
+</div>

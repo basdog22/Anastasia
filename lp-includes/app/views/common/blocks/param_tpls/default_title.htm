@@ -1,0 +1,8 @@
+{{ Form::label(t('strings.title')) }}
+{{ Form::text('params[title]',$params['title']) }}
+<div class="clearfix"></div>
+{{ Form::label(t('strings.level')) }}
+{{ Form::selectRange('params[heading_level]',1,6,$params['heading_level']) }}
+<div class="clearfix"></div>
+{{ Form::label(t('strings.classname')) }}
+{{ Form::text('params[classname]',$params['classname']) }}

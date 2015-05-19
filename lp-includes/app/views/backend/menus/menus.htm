@@ -1,0 +1,29 @@
+<div class="row">
+    <div class="col-xs-12">
+        <div class="box">
+            <div class="box-header">
+                <div class="box-name">
+                    <i class="fa fa-cogs"></i>
+                    <span>{{ t('strings.menus') }}</span>
+                </div>
+                <div class="box-icons">
+                    <a href="{{url('backend/newmenu')}}" class="modal-link" style="width: auto">
+                        <i class="fa fa-plus"></i>
+                        {{ t('strings.new_menu') }}
+                    </a>
+
+                </div>
+                <div class="no-move"></div>
+            </div>
+            <div class="box-content no-padding clearfix no-overflow dd nestable" data-action="/backend/menureorder">
+                <ol class="dd-list ">
+                    @foreach($menus as $menu)
+                    @include('backend.menus.partials.menu', ['menu'=>$menu])
+                    @endforeach
+                </ol>
+            </div>
+        </div>
+    </div>
+
+</div>
+

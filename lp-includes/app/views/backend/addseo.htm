@@ -1,0 +1,16 @@
+
+<div class="row">
+    <div class="col-lg-8 col-lg-offset-2">
+        {{ Form::open(array('url'=>'backend/addseo', 'class'=>'form-newmenu')) }}
+        <h2 class="form-signin-heading">{{ t('laracms::strings.add_seo') }}</h2>
+        {{ Form::hidden('itemid', $item->id) }}
+        {{ Form::hidden('model', $model) }}
+        {{ Form::text('title', $item->title , array('class'=>'form-control', 'placeholder'=>t('laracms::strings.seo_title'))) }}
+        {{ Form::textarea('description', $item->description  , array('class'=>'form-control', 'placeholder'=>t('laracms::strings.seo_description'))) }}
+        {{ Form::textarea('keywords', $item->keywords  , array('class'=>'form-control', 'placeholder'=>t('laracms::strings.seo_keywords'))) }}
+
+        {{ Form::submit(t('strings.save'), array('class'=>'btn btn-large btn-primary'))}}
+        {{ Form::close() }}
+    </div>
+
+</div>

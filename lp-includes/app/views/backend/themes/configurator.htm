@@ -1,0 +1,35 @@
+{{ HTML::style(Config::get("settings.cms.rel_includes").'/app/views/layouts/backend/plugins/bootstrap/bootstrap.css') }}
+{{ HTML::style(Config::get("settings.cms.rel_includes").'/app/views/layouts/backend/css/configurator.css') }}
+{{ HTML::script(Config::get("settings.cms.rel_includes").'/app/views/layouts/backend/plugins/jquery/jquery-2.1.0.min.js') }}
+{{ HTML::script(Config::get("settings.cms.rel_includes").'/app/views/layouts/backend/plugins/jquery/jquery-migrate-1.2.1.min.js') }}
+<div class="row">
+
+    <div class="col-lg-2">
+        <div class="configurator-sidebar">
+            <div class="inner">
+                <h3 style="text-align: center;color: #fff">{{ t('strings.theme_config') }}</h3>
+                {{ Form::open(array('url'=>'themes/configurator','files'=>true, 'class'=>'form-newmenu')) }}
+                @foreach($config as $k=>$v)
+                <div class="config_item">
+                    @include('backend/themes/configurator_items/'.$v['type'],$v)
+                </div>
+                <div class="clearfix"></div>
+                @endforeach
+                <hr/>
+                {{ Form::submit(t('strings.save'), array('class'=>'btn btn-large btn-primary'))}}
+                {{ Form::button(t('strings.close'), array('class'=>'btn btn-large
+                btn-danger','onclick'=>'document.location="'.url('themes/manage').'"'))}}
+                {{ Form::close() }}
+            </div>
+            <div class="clearfix">&nbsp;</div>
+            <div id="notifications-container">
+                @if(Session::has('message'))
+                {{ Session::get('message') }}
+                @endif
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-10">
+        <iframe style="width: 100%;border: 0;min-height: 800px" src="{{home_url()}}"></iframe>
+    </div>
+</div>

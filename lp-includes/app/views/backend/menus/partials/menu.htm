@@ -1,0 +1,18 @@
+<li class="dd-item dd3-item" data-id="{{$menu->id}}">
+    <div class="dd-handle dd3-handle "></div>
+    <div class="dd3-content ">
+        <div class="pull-left">{{ $menu->title }}</div>
+        <div class="btn-group pull-right">
+            <a class="btn btn-default modal-link" href="{{ url('backend/editmenu/'.$menu->id) }}">{{ t('strings.edit') }}</a>
+            <a class="btn btn-danger delbtn" href="{{ url('backend/delmenu/'.$menu->id) }}">{{ t('strings.delete') }}</a>
+        </div>
+    </div>
+
+    @if(count($menu->children)>0)
+    <ol class="dd-list">
+        @foreach($menu->children as $sub)
+        @include('backend.menus.partials.menu', ['menu'=>$sub])
+        @endforeach
+    </ol>
+    @endif
+</li>

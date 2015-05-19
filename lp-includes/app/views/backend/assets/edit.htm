@@ -1,0 +1,42 @@
+<div class="row">
+    {{ Form::open(array('url'=>'backend/assets/edit', 'class'=>'form-newpage')) }}
+    <div class="col-md-9">
+        <div class="col-md-12 box widget-box">
+            <div class="box-header handle">
+                <div class="box-name">
+                    <span>
+                        {{ t('strings.edit') }}
+
+                    </span>
+                </div>
+            </div>
+            <div class="box-content">
+                {{ Form::hidden('filename', $post->filename) }}
+
+                {{ Form::label(t('strings.title')) }}
+                {{ Form::text('title', $post->title, array('class'=>'form-control', 'placeholder'=>t('strings.title'))) }}
+                {{ Form::label(t('strings.content')) }}
+                {{ Form::textarea('content', $post->description , array('class'=>'form-control rte','id'=>'post-content', 'placeholder'=>t('strings.content'))) }}
+            </div>
+
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="row">
+            <div class="col-md-11 box widget-box">
+                <div class="box-header handle">
+                    <div class="box-name">
+                        <span>{{ t('strings.save') }}</span>
+                    </div>
+                    <div class="box-icons">
+                        <a href="#" class="move-activ"><i class="fa fa-arrows "></i></a>
+                    </div>
+                </div>
+                <div class="box-content">
+                    {{ Form::submit(t('strings.save'), array('class'=>'btn btn-large btn-primary'))}}
+                </div>
+            </div>
+        </div>
+    </div>
+    {{ Form::close() }}
+</div>

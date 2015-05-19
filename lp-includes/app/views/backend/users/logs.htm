@@ -1,0 +1,78 @@
+
+<div class="row">
+    <div class="col-xs-12">
+        <div class="box">
+            <div class="box-header no-overflow">
+                <div class="box-name">
+                    <i class="fa fa-cogs"></i>
+                    <span>{{ t('strings.logs') }}</span>
+                </div>
+                <div class="box-icons col-sm-11">
+                    <span class="pull-left col-sm-10">
+                        <a href="{{url('users/logs')}}">
+                            <i class="fa fa-users"></i>
+                            <span>{{ t('strings.all') }}</span>
+                        </a>
+                        <a href="{{url('users/logs/Login')}}">
+                            <i class="fa fa-user-secret"></i>
+                            <span>Login</span>
+                        </a>
+                        <a href="{{url('users/logs/Logout')}}">
+                            <i class="fa fa-user-plus"></i>
+                            <span>Logout</span>
+                        </a>
+
+
+                    </span>
+
+
+                </div>
+                <div class="no-move"></div>
+            </div>
+            <div class="box-content no-padding">
+                {{ $logs->links() }}
+                <table class="table table-bordered table-striped table-hover table-heading table-datatable" id="addonstable">
+                    <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>{{ t('strings.dates') }}</th>
+                        <th>{{ t('strings.ip') }}</th>
+                        <th>{{ t('strings.username') }}</th>
+                        <th><i class="fa fa-info"></i> </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    @foreach ($logs as $log)
+                    <tr>
+                        <td>
+                            {{$log->id}}
+                        </td>
+                        <td>{{date('d-m-Y H:i:s',$log->content['time'])}}</td>
+                        <td>{{$log->content['ip']}}</td>
+                        <td>
+                            @if(isset($log->content['user']->username))
+                            {{ $log->content['user']->username }}
+                            @else
+                            -
+                            @endif
+                        </td>
+                        <td>
+                            <textarea class="col-md-12">
+                                {{ le(var_export($log->content['request'],false)) }}}
+                                {{ le(var_export($log->content['browser'],false)) }}}
+                            </textarea>
+                        </td>
+                    </tr>
+                    @endforeach
+
+
+                    <!-- End: list_row -->
+                    </tbody>
+
+                </table>
+                {{ $logs->links() }}
+            </div>
+        </div>
+    </div>
+</div>
+

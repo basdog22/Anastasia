@@ -1,0 +1,59 @@
+
+    <div class="row">
+        <div class="col-lg-4" style="overflow: auto;height:650px">
+
+            @foreach($content as $sub)
+            @foreach($sub as $type)
+            <h5 style="cursor: pointer" onclick="jQuery('#content_{{$type['type']}}').toggle()">{{ $type['title'] }}</h5>
+            <div id="content_{{$type['type']}}" style="height: 150px;overflow: auto">
+                <ul class="nav nav-stacked">
+                    @foreach($type['model']::where('status','=',1)->get() as $pages)
+                    <li><a href="#" class="transfer-url" data-appendto="url" data-href="{{$pages->slug}}">{{$pages->title}}</a></li>
+                    @endforeach
+                </ul>
+
+            </div>
+            @endforeach
+            @endforeach
+
+        </div>
+        <div class="col-lg-8">
+            {{ Form::open(array('url'=>'backend/savemenu', 'class'=>'form-newmenu')) }}
+            <h2 class="form-signin-heading">{{ t('strings.edit_menu') }}</h2>
+            {{ Form::hidden('menuid', $menu->id) }}
+            {{ Form::text('title', $menu->title , array('class'=>'form-control', 'placeholder'=>t('strings.menu_title'))) }}
+            {{ Form::text('name', $menu->name  , array('class'=>'form-control', 'placeholder'=>t('strings.menu_name'))) }}
+            {{ Form::label(t('strings.menu_position')) }}
+            <select name="position" class="">
+                <option selected value="0">{{ t('strings.please_select') }}</option>
+                @foreach($positions as $sub)
+                @foreach($sub as $k=>$v)
+                <option @if($k==$menu->position) selected @endif value="{{ $k }}">{{ $v }}</option>
+                @endforeach
+                @endforeach
+            </select>
+            {{ Form::label(t('strings.submenu_from')) }}
+            <select name="model" class="">
+                <option selected value="0">{{ t('strings.please_select') }}</option>
+                @foreach($content as $sub)
+                @foreach($sub as $type)
+                <option value="{{ $type['model'] }}">{{ $type['title'] }}</option>
+                @endforeach
+                @endforeach
+            </select>
+            {{ Form::text('url', $menu->url, array('class'=>'form-control', 'placeholder'=>t('strings.url'))) }}
+
+            {{ Form::text('link_text', $menu->link_text , array('class'=>'form-control', 'placeholder'=>t('strings.link_text'))) }}
+            {{ Form::label(t('strings.link_target')) }}
+            {{ Form::select('link_target', array('_self'=>t('strings.same_window'),'_blank'=>t('strings.new_window')),$menu->link_target) }}
+            {{ Form::textarea('link_attr', $menu->link_attr, array('class'=>'form-control', 'placeholder'=>t('strings.link_attr'))) }}
+            {{ Form::text('link_css', $menu->link_css, array('class'=>'form-control', 'placeholder'=>t('strings.link_css'))) }}
+            {{ Form::text('link_class', $menu->link_class, array('class'=>'form-control', 'placeholder'=>t('strings.link_class'))) }}
+
+            {{ Form::submit(t('strings.save_menu'), array('class'=>'btn btn-large btn-primary'))}}
+            {{ Form::close() }}
+        </div>
+
+    </div>
+
+

@@ -1,0 +1,11 @@
+<div style="width: 100%;clear: both">
+    <select id="shortcode" style="float: left" onchange="document.querySelector('#explanation').innerHTML = this.options[this.options.selectedIndex].attributes[1].value">
+        <option value="0">----</option>
+        @foreach($items as $shortcode)
+        <option data-description="{{$shortcode['description']}}" value="{{$shortcode['shortcode']}}">{{$shortcode['shortcode']}}</option>
+        @endforeach
+    </select>
+    <div id="explanation" style="display:block;float:none;clear:both;padding: 20px">
+
+    </div>
+</div>

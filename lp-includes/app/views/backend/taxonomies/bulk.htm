@@ -1,0 +1,41 @@
+<div class="row">
+    <div class="col-md-12">
+        {{ Form::open(array('url'=>'backend/taxonomies/edit', 'class'=>'form-newmenu')) }}
+
+        <div class="box">
+            <div class="box-header">
+                <div class="box-name">
+                    <span>{{ t('strings.bulk_edit') }}</span>
+                </div>
+                <div class="box-icons">
+                    {{ Form::submit(t('strings.save'), array('class'=>'btn btn-large btn-primary'))}}
+                </div>
+            </div>
+            <div class="box-content">
+                @foreach($taxonomies as $k=>$taxonomy)
+                <div class="col-md-4">
+                    <div class="box">
+                        <div class="box-header">
+                            <div class="box-name">
+                                <span>{{$taxonomy->title}}</span>
+                            </div>
+                        </div>
+                        <div class="box-content">
+                            {{ Form::label(t('strings.title')) }}
+                            {{ Form::text("tax[$taxonomy->id][title]", $taxonomy->title, array('class'=>'form-control', 'placeholder'=>t('strings.menu_title'))) }}
+                            {{ Form::label(t('strings.name')) }}
+                            {{ Form::text("tax[$taxonomy->id][name]", $taxonomy->name , array('class'=>'form-control', 'placeholder'=>t('strings.menu_name'))) }}
+                        </div>
+                    </div>
+
+                </div>
+                @endforeach
+                <div class="clearfix"></div>
+            </div>
+        </div>
+        {{ Form::close() }}
+    </div>
+</div>
+
+
+

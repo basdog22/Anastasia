@@ -1,0 +1,2 @@
+{{ Form::label($name,ucwords(str_replace('_',' ',$name)),['class'=>'label label-info']) }}
+{{ Form::input('color',$name, $value , array('class'=>'form-control', 'pattern'=>"#[a-f0-9]{6}", 'placeholder'=>ucwords(str_replace('_',' ',$name)))) }}

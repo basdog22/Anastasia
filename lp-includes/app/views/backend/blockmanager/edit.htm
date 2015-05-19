@@ -1,0 +1,24 @@
+<div class="row">
+    <div class="col-lg-8 col-lg-offset-2">
+        {{ Form::open(array('url'=>'backend/blockmanager/save', 'class'=>'form-newmenu')) }}
+        <h2 class="form-signin-heading">{{ t('strings.edit') }}</h2>
+        {{ Form::hidden('blockid',$block->id) }}
+
+        {{ Form::label(t('strings.tpl')) }}
+        {{ Form::select('tpl',$info['tpl'],array($block->tpl)) }}
+        @if($data)
+            @if(isset($info['params_tpl']))
+                {{$data}}
+            @else
+                @if(isset($info['multiple_select']))
+                {{ Form::select('params[]',$data,array($block->params),['multiple'=>true]) }}
+                @else
+                {{ Form::select('params',$data,array($block->params)) }}
+                @endif
+            @endif
+        @endif
+        {{ Form::submit(t('strings.save'), array('class'=>'btn btn-large btn-primary'))}}
+        {{ Form::close() }}
+    </div>
+
+</div>

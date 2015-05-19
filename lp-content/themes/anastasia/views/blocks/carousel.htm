@@ -1,0 +1,30 @@
+
+<header id="myCarousel" class="carousel slide">
+    <!-- Indicators -->
+    <ol class="carousel-indicators">
+        @foreach($blockdata as $k=>$slide)
+        <li data-target="#myCarousel" data-slide-to="{{$k}}" class="@if($k==0) active @endif"></li>
+        @endforeach
+    </ol>
+
+    <!-- Wrapper for slides -->
+    <div class="carousel-inner">
+        @foreach($blockdata as $k=>$slide)
+        <div class="item @if($k==0) active @endif">
+            <a href="{{$slide['url']}}">
+            <div class="fill" style="background-image:url('{{$slide['img']->url(1400)}}');"></div>
+            <div class="carousel-caption">
+                <h2>{{$slide['caption']}}</h2>
+            </div></a>
+        </div>
+        @endforeach
+    </div>
+
+    <!-- Controls -->
+    <a class="left carousel-control" href="#myCarousel" data-slide="prev">
+        <span class="icon-prev"></span>
+    </a>
+    <a class="right carousel-control" href="#myCarousel" data-slide="next">
+        <span class="icon-next"></span>
+    </a>
+</header>

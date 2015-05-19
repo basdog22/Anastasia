@@ -1,0 +1,59 @@
+<div class="row">
+    <div class="col-xs-12">
+        <div class="box">
+            <div class="box-header">
+                <div class="box-name">
+                    <i class="fa fa-cogs"></i>
+                    <span>{{ t('strings.menuitems') }}</span>
+                </div>
+                <div class="box-icons">
+                    <a href="{{url('backend/newmenuitem/'.$menu->id)}}" class="modal-link" style="width: auto">
+                        <i class="fa fa-plus"></i>
+                        {{ t('strings.new_menuitem') }}
+                    </a>
+
+                </div>
+                <div class="no-move"></div>
+            </div>
+            <div class="box-content no-padding">
+                <table class="table table-bordered table-striped table-hover table-heading table-datatable" id="addonstable">
+                    <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>{{ t('strings.menuitem_sort') }}</th>
+                        <th>{{ t('strings.menuitem_title') }}</th>
+                        <th>{{ t('strings.actions') }}</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    @foreach ($menuitems as $menuitem)
+                    <tr>
+                        <td>{{ $menuitem->id }}</td>
+                        <td><input class="auto-update-sort col-md-1" data-action="/backend/menuitemsort" id="{{ $menuitem->id }}" type="number" value="{{ $menuitem->sort }}" /></td>
+                        <td><a href="{{ url('backend/editmenuitem/'.$menuitem->id) }}">{{ $menuitem->link_text }}</a></td>
+                        <td>
+                            <div class="btn-group">
+                                <a class="btn btn-default modal-link" href="{{ url('backend/editmenuitem/'.$menuitem->id) }}">{{ t('strings.edit') }}</a>
+                                <a class="btn btn-danger delbtn" href="{{ url('backend/delmenuitem/'.$menuitem->id) }}">{{ t('strings.delete') }}</a>
+                            </div>
+                        </td>
+                    </tr>
+                    @endforeach
+
+
+                    <!-- End: list_row -->
+                    </tbody>
+                    <tfoot>
+                    <tr>
+                        <th>#</th>
+                        <th>{{ t('strings.menuitem_sort') }}</th>
+                        <th>{{ t('strings.menuitem_title') }}</th>
+                        <th>{{ t('strings.actions') }}</th>
+                    </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+

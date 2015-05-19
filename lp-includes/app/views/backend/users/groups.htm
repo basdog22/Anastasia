@@ -1,0 +1,113 @@
+<div class="row">
+    <div class="col-xs-12">
+        <div class="box">
+            <div class="box-header">
+                <div class="box-name">
+                    <i class="fa fa-cogs"></i>
+                    <span>{{ t('strings.user_groups') }}</span>
+                </div>
+                <div class="box-icons">
+                    <a href="{{url('users/newgroup')}}" class="modal-link" style="width: auto">
+                        <i class="fa fa-plus"></i>
+                        {{ t('strings.new_user_group') }}
+                    </a>
+
+                </div>
+                <div class="no-move"></div>
+            </div>
+            <div class="box-content no-padding">
+                <table class="table table-bordered table-striped table-hover table-heading table-datatable" id="addonstable">
+                    <thead>
+                    <tr>
+                        <th><input type="checkbox" class="checkall"></th>
+                        <th>{{ t('strings.name') }}</th>
+                        <th>
+                            <table class="col-sm-12">
+                                <tr>
+                                    <td class="col-sm-2 center">{{t('strings.root')}}</td>
+                                    <td class="col-sm-2 center">{{t('strings.admin')}}</td>
+                                    <td class="col-sm-2 center">{{t('strings.editor')}}</td>
+                                    <td class="col-sm-2 center">{{t('strings.author')}}</td>
+                                    <td class="col-sm-2 center">{{t('strings.member')}}</td>
+                                </tr>
+                            </table>
+                        </th>
+                        <th id="actions_container" data-base="{{url('users/groups')}}" data-actions="delete">{{ t('strings.actions') }}</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    @foreach ($groups as $group)
+                    <tr>
+                        <td>
+                            @if ($group->id>1)
+                            <input type="checkbox" class="checkme" value="{{ $group->id }}">
+                            @else
+                            <input type="checkbox" disabled class="checkme">
+                            @endif
+                        </td>
+                        <td>{{ $group->name }}</td>
+                        <td>
+                            @if ($group->id>1)
+                            <table class="col-sm-12">
+                                <tr>
+                                    <td class="col-sm-2 center"><input class="auto-input" data-groupid="{{$group->id}}" data-action="/users/groupperms" type="checkbox" value="1" name="root" @if(isset($group->getPermissions()['root'])) checked @endif /></td>
+                                    <td class="col-sm-2 center"><input class="auto-input" data-groupid="{{$group->id}}" data-action="/users/groupperms" type="checkbox" value="1" name="admin" @if(isset($group->getPermissions()['admin'])) checked @endif /></td>
+                                    <td class="col-sm-2 center"><input class="auto-input" data-groupid="{{$group->id}}" data-action="/users/groupperms" type="checkbox" value="1" name="editor" @if(isset($group->getPermissions()['editor'])) checked @endif /></td>
+                                    <td class="col-sm-2 center"><input class="auto-input" data-groupid="{{$group->id}}" data-action="/users/groupperms" type="checkbox" value="1" name="author" @if(isset($group->getPermissions()['author'])) checked @endif /></td>
+                                    <td class="col-sm-2 center"><input class="auto-input" data-groupid="{{$group->id}}" data-action="/users/groupperms" type="checkbox" value="1" name="member" @if(isset($group->getPermissions()['member'])) checked @endif /></td>
+                                </tr>
+                            </table>
+                            @else
+                            <table class="col-sm-12">
+                                <tr>
+                                    <td class="col-sm-2 center"><input disabled class="auto-input" data-groupid="{{$group->id}}" data-action="/users/groupperms" type="checkbox" value="1" name="root" @if(isset($group->getPermissions()['root'])) checked @endif /></td>
+                                    <td class="col-sm-2 center"><input disabled class="auto-input" data-groupid="{{$group->id}}" data-action="/users/groupperms" type="checkbox" value="1" name="admin" @if(isset($group->getPermissions()['admin'])) checked @endif /></td>
+                                    <td class="col-sm-2 center"><input disabled class="auto-input" data-groupid="{{$group->id}}" data-action="/users/groupperms" type="checkbox" value="1" name="editor" @if(isset($group->getPermissions()['editor'])) checked @endif /></td>
+                                    <td class="col-sm-2 center"><input disabled class="auto-input" data-groupid="{{$group->id}}" data-action="/users/groupperms" type="checkbox" value="1" name="author" @if(isset($group->getPermissions()['author'])) checked @endif /></td>
+                                    <td class="col-sm-2 center"><input disabled class="auto-input" data-groupid="{{$group->id}}" data-action="/users/groupperms" type="checkbox" value="1" name="member" @if(isset($group->getPermissions()['member'])) checked @endif /></td>
+                                </tr>
+                            </table>
+                            @endif
+                        </td>
+                        <td>
+                            @if ($group->id>1)
+                            <div class="btn-group">
+                                <a href="{{url('users/delgroup/'.$group->id)}}" class="btn btn-danger delbtn">{{t('strings.delete')}}</a>
+                            </div>
+                            @endif
+                        </td>
+                    </tr>
+                    @endforeach
+
+
+                    <!-- End: list_row -->
+                    </tbody>
+                    <tfoot>
+                    <tr>
+                        <th><input type="checkbox" class="checkall"></th>
+                        <th>{{ t('strings.name') }}</th>
+                        <th>
+                            <table class="col-sm-12">
+                                <tr>
+                                    <td class="col-sm-2 center">{{t('strings.root')}}</td>
+                                    <td class="col-sm-2 center">{{t('strings.admin')}}</td>
+                                    <td class="col-sm-2 center">{{t('strings.editor')}}</td>
+                                    <td class="col-sm-2 center">{{t('strings.author')}}</td>
+                                    <td class="col-sm-2 center">{{t('strings.member')}}</td>
+                                </tr>
+                            </table>
+                        </th>
+                        <th>{{ t('strings.actions') }}</th>
+                    </tr>
+                    </tfoot>
+                </table>
+            </div>
+            <div class="box-footer">
+                <select class="bulk_actions no-select2">
+                    <option value="0">{{t('strings.with_selected')}}</option>
+                </select>
+            </div>
+        </div>
+    </div>
+</div>
+

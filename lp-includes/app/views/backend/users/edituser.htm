@@ -1,0 +1,102 @@
+
+    {{ Form::open(array('url'=>'users/saveuser', 'class'=>'form-edituser')) }}
+    {{ Form::hidden('userid', $user->id) }}
+    <div class="col-md-11 box widget-box">
+        <div class="box-header">
+            <div class="box-name">
+                <span>{{ t('strings.edit_user') }}</span>
+            </div>
+        </div>
+        <div class="box-content">
+            {{ Form::label(t('strings.firstname')) }}
+            {{ Form::text('firstname', $user->firstname, array('class'=>'form-control',
+            'placeholder'=>t('strings.firstname'))) }}
+            {{ Form::label(t('strings.lastname')) }}
+            {{ Form::text('lastname', $user->lastname , array('class'=>'form-control',
+            'placeholder'=>t('strings.lastname'))) }}
+            {{ Form::label(t('strings.email')) }}
+            {{ Form::email('email', $user->email , array('class'=>'form-control', 'placeholder'=>t('strings.email'))) }}
+            {{ Form::label(t('strings.user_group')) }}
+            <select name="user_group">
+                @foreach($groups as $group)
+                <option value="{{$group->id}}"
+                @if($user->inGroup($group)) selected @endif >{{$group->name}}</option>
+                @endforeach
+            </select>
+            {{ Form::label(t('strings.password')) }}
+            {{ Form::password('password', null , array('class'=>'form-control', 'placeholder'=>t('strings.password')))}}
+        </div>
+    </div>
+    <div class="col-md-11 box widget-box">
+        <div class="box-header">
+            <div class="box-name">
+                <span>{{t('strings.metadata')}}</span>
+            </div>
+        </div>
+        <div class="box-content">
+            <div class="row ">
+                <table class="table table-bordered table-striped table-hover table-heading hastools" id="addonstable">
+                    <thead>
+                    <tr>
+                        <th><input type="checkbox" class="checkall"></th>
+                        <th>{{ t('strings.name') }}</th>
+                        <th>{{ t('strings.value') }}</th>
+                    </tr>
+                    </thead>
+
+                    <tr class="cloneme removeme">
+                        <th>#</th>
+                        <th> {{
+                            Form::text('newmetas[0][name]',null,['class'=>'form-control','placeholder'=>t('strings.name')])
+                            }}
+                        </th>
+                        <th>{{
+                            Form::textarea('newmetas[0][value]',null,['class'=>'form-control','placeholder'=>t('strings.value')])
+                            }}
+                        </th>
+                    </tr>
+
+                    <tbody>
+                    @foreach(\User::find($user->id)->default_metas as $k=>$meta)
+                    <tr class="removeme">
+                        <th>#</th>
+                        <th>{{
+                            Form::text("metas[d{$k}][name]",$meta['name'],['class'=>'form-control','placeholder'=>t('strings.name')])
+                            }}
+                        </th>
+                        <th>{{
+                            Form::textarea("metas[d{$k}][value]",'',['class'=>'form-control','placeholder'=>t('strings.value')])
+                            }}
+                        </th>
+                    </tr>
+                    @endforeach
+                    @foreach(\User::find($user->id)->metas as $meta)
+                    <tr class="removeme">
+                        <th><input type="checkbox" class="checkme" value="{{$meta->id}}"></th>
+                        <th>{{
+                            Form::text("metas[$meta->id][name]",$meta->name,['class'=>'form-control','placeholder'=>t('strings.name')])
+                            }}
+                        </th>
+                        <th>{{
+                            Form::textarea("metas[$meta->id][value]",\User::find($user->id)->meta($meta->name),['class'=>'form-control','placeholder'=>t('strings.value')])
+                            }}
+                        </th>
+                    </tr>
+                    @endforeach
+                    </tbody>
+                    <tfoot>
+                    <tr>
+                        <th><input type="checkbox" class="checkall"></th>
+                        <th>{{ t('strings.name') }}</th>
+                        <th>{{ t('strings.value') }}</th>
+                    </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+    </div>
+    {{ Form::submit(t('strings.save_user'), array('class'=>'btn btn-large btn-primary'))}}
+    {{ Form::close() }}
+
+
+

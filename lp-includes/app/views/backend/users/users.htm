@@ -1,0 +1,132 @@
+
+<div class="row">
+<div class="col-xs-12">
+<div class="box">
+<div class="box-header no-overflow">
+    <div class="box-name">
+        <i class="fa fa-cogs"></i>
+        <span>{{ t('strings.users') }}</span>
+    </div>
+    <div class="box-icons col-sm-11">
+                    <span class="pull-left col-sm-10">
+                        <a href="{{url('users/manage')}}">
+                            <i class="fa fa-users"></i>
+                            <span>{{ t('strings.all') }}</span>
+                        </a>
+                        <a href="{{url('users/manage/root')}}">
+                            <i class="fa fa-user-secret"></i>
+                            <span>{{ t('strings.root') }}</span>
+                        </a>
+                        <a href="{{url('users/manage/administrator')}}">
+                            <i class="fa fa-user-plus"></i>
+                            <span>{{ t('strings.admin') }}</span>
+                        </a>
+                         <a href="{{url('users/manage/editor')}}">
+                             <i class="fa fa-pencil-square-o"></i>
+                             <span>{{ t('strings.editor') }}</span>
+                         </a>
+                        <a href="{{url('users/manage/author')}}">
+                            <i class="fa fa-pencil"></i>
+                            <span>{{ t('strings.author') }}</span>
+                        </a>
+                        <a href="{{url('users/manage/member')}}">
+                            <i class="fa fa-smile-o"></i>
+                            <span>{{ t('strings.member') }}</span>
+                        </a>
+                        <a href="{{url('users/manage/online')}}" class="ttips" title="{{t('strings.ten_minutes_period')}}">
+                            <i class="fa fa-at" ></i>
+                            <span>{{ t('strings.online') }}</span>
+                        </a>
+                        @if(count($groups)>5)
+                        <div class="dropdown pull-right">
+                            <button class="btn btn-info btn-xs dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
+                                {{ t('strings.custom_user_groups')}}
+                                <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+                                @foreach($groups as $group)
+                                @if($group->id>5)
+                                <li role="presentation"><a role="menuitem" tabindex="-1" href="{{url('users/manage/'.strtolower($group->name))}}">{{ $group->name }}</a></li>
+                                @endif
+                                @endforeach
+                            </ul>
+                        </div>
+                        @endif
+
+                    </span>
+
+                    <span class="pull-right col-sm-2">
+                        <a href="{{url('users/new')}}" class="modal-link" style="width: auto">
+                            <i class="fa fa-plus"></i>
+                            {{ t('strings.new_user') }}
+                        </a>
+                    </span>
+
+
+
+    </div>
+    <div class="no-move"></div>
+</div>
+<div class="box-content no-padding">
+    {{ $users->links() }}
+<table class="table table-bordered table-striped table-hover table-heading table-datatable" id="addonstable">
+<thead>
+<tr>
+    <th><input type="checkbox" class="checkall"></th>
+    <th>{{ t('strings.user_img') }}</th>
+    <th>{{ t('strings.email') }}</th>
+    <th>{{ t('strings.lastname') }}</th>
+    <th>{{ t('strings.firstname') }}</th>
+    <th>{{ t('strings.actions') }}</th>
+</tr>
+</thead>
+<tbody>
+@foreach ($users as $user)
+<tr>
+    <td>
+        @if(is_root($user))
+        <input type="checkbox" disabled class="checkme">
+        @else
+        <input type="checkbox" class="checkme" value="{{ $user->id }}">
+        @endif
+    </td>
+    <td><img src="http://www.gravatar.com/avatar/{{ md5($user->email) }}" class="img-rounded" alt="avatar" /></td>
+    <td><a href="mailto:{{$user->email}}">{{ $user->email }}</a></td>
+    <td>{{ $user->lastname }}</td>
+    <td>{{ $user->firstname }}</td>
+    <td>
+        @if(isset($user->session_id))
+        <a href="{{url('users/logoutuser/'.$user->session_id)}}" class="btn btn-warning">{{t('strings.log_user_out')}}</a>
+        @endif
+        @if (is_root($user))
+        <a href="{{url('users/profile/'.$user->id)}}" class="btn btn-primary modal-link">{{t('strings.profile')}}</a>
+        @else
+        <div class="btn-group">
+        <a href="{{url('users/profile/'.$user->id)}}" class="btn btn-primary modal-link">{{t('strings.profile')}}</a>
+        <a href="{{url('users/edituser/'.$user->id)}}" class="btn btn-primary modal-link">{{t('strings.edit')}}</a>
+        </div>
+        @endif
+    </td>
+</tr>
+@endforeach
+
+
+<!-- End: list_row -->
+</tbody>
+<tfoot>
+<tr>
+    <th><input type="checkbox" class="checkall"></th>
+    <th>{{ t('strings.user_img') }}</th>
+    <th>{{ t('strings.email') }}</th>
+    <th>{{ t('strings.lastname') }}</th>
+    <th>{{ t('strings.firstname') }}</th>
+    <th>{{ t('strings.actions') }}</th>
+</tr>
+</tfoot>
+</table>
+    {{ $users->links() }}
+</div>
+</div>
+</div>
+</div>
+

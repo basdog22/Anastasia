@@ -1,0 +1,4 @@
+@foreach($object as $item)
+    @include($item->content_type.'::partials/'.$item->content_type,array('item'=>$item))
+@endforeach
+{{$object->links()}}

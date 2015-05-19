@@ -1,0 +1,25 @@
+{{ Form::label(t('strings.title')) }}
+{{ Form::text('params[title]',$params['title']) }}
+<div class="clearfix"></div>
+{{ Form::label(t('strings.content')) }}
+{{ Form::textarea('params[text]',$params['text'],['class'=>'tinyrte']) }}
+<div class="clearfix"></div>
+{{ Form::label(t('strings.url')) }}
+{{ Form::text('params[url]',$params['url']) }}
+<div class="clearfix"></div>
+{{ Form::label(t('strings.button')) }}
+{{ Form::text('params[button]',$params['button']) }}
+<div class="clearfix"></div>
+<script>
+    tinymce.init({
+        selector: "textarea.tinyrte",
+        relative_urls: false,
+        remove_script_host: false,
+        plugins: [
+            "image link code media loadfile shortcodes template"
+        ],
+        menubar:false,
+        statusbar: false,
+        toolbar: "image link shortcodes template | bold italic | alignleft aligncenter alignright bullist numlist | code"
+    });
+</script>

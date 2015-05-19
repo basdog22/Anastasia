@@ -1,0 +1,25 @@
+{{ Form::label($name,ucwords(str_replace('_',' ',$name)),['class'=>'label label-info']) }}
+{{ Form::select($name, array(),'',['id'=>'googlefont']) }}
+<script>
+
+    function SetFonts(fonts) {
+        for (var i = 0; i < fonts.items.length; i++) {
+
+            if(fonts.items[i].family=='{{$value}}'){
+                $('#googlefont')
+                    .append($("<option selected></option>")
+                        .attr("value", fonts.items[i].family)
+                        .text(fonts.items[i].family));
+            }else{
+                $('#googlefont')
+                    .append($("<option></option>")
+                        .attr("value", fonts.items[i].family)
+                        .text(fonts.items[i].family));
+            }
+
+        }
+    }
+    var script = document.createElement('script');
+    script.src = 'https://www.googleapis.com/webfonts/v1/webfonts?key={{ GOOGLE_API_KEY }}&callback=SetFonts';
+    document.body.appendChild(script);
+</script>

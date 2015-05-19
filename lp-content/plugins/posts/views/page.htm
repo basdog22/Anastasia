@@ -1,0 +1,19 @@
+<div class="col-md-12">
+    <h2 class="page-header"><a href="{{url($object->slug)}}" rel="bookmark">{{$object->title}}</a></h2>
+
+    <div class="panel-body">
+        <div class="thumbnail pull-left col-md-5 col-xs-12" style="margin:0 10px 0 0px">
+            <img src="{{$object->image->url()}}" class="img-responsive" />
+        </div>
+        {{$object->renderContent()}}
+    </div>
+
+    @forelse($object->comments as $comment)
+    @if($comment->getLevel()===0)
+    @include('comments_template',['comment'=>$comment])
+    @endif
+    @empty
+    @if(allow_comments()) <div class="text-muted">{{t('strings.no_comments')}}</div> @endif
+    @endforelse
+    @include('comments_form',['object'=>$object,'type'=>'\Plugins\posts\models\Post'])
+</div>

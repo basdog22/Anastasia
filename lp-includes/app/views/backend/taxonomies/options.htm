@@ -1,0 +1,30 @@
+@foreach($taxonomies as $sub)
+<option value="{{$sub->id}}">{{$sub->title}}</option>
+@foreach($sub->children as $child)
+<option value="{{$child->id}}"> - {{$child->title}}</option>
+@foreach($child->children as $gchild)
+<option value="{{$gchild->id}}"> -- {{$gchild->title}}</option>
+@foreach($gchild->children as $ggchild)
+<option value="{{$ggchild->id}}"> --- {{$ggchild->title}}</option>
+@foreach($ggchild->children as $gggchild)
+<option value="{{$gggchild->id}}"> ---- {{$gggchild->title}}</option>
+@foreach($gggchild->children as $ggggchild)
+<option value="{{$ggggchild->id}}"> ----- {{$ggggchild->title}}</option>
+@foreach($ggggchild->children as $gggggchild)
+<option value="{{$gggggchild->id}}"> ------ {{$gggggchild->title}}</option>
+@foreach($gggggchild->children as $ggggggchild)
+<option value="{{$ggggggchild->id}}"> ------- {{$ggggggchild->title}}</option>
+@foreach($ggggggchild->children as $gggggggchild)
+<option value="{{$gggggggchild->id}}"> -------- {{$gggggggchild->title}}</option>
+@foreach($gggggggchild->children as $ggggggggchild)
+<option value="{{$ggggggggchild->id}}"> -------- {{$ggggggggchild->title}}</option>
+@endforeach
+@endforeach
+@endforeach
+@endforeach
+@endforeach
+@endforeach
+@endforeach
+@endforeach
+@endforeach
+@endforeach

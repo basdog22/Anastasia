@@ -1,0 +1,22 @@
+@if(allow_comments())
+{{ Form::open(array('url'=>'/addcomment', 'class'=>'form-newpage')) }}
+    {{honey_pot()}}
+    <div class="col-xs-12 comment_form" id="comment_form">
+        <h1 class="page-header">{{t('strings.leave_comment')}}</h1>
+        <input type="hidden" name="object_id" value="{{$object->id}}" />
+        <input type="hidden" name="object_type" value="{{$type}}" />
+        <input type="hidden" id="parent_id" name="parent_id" value="" />
+        <div class="form-group">
+            <label for="comment_title">{{t('strings.title')}}</label>
+            <input id="comment_title" required type="text" name="title" class="form-control" />
+        </div>
+        <div class="form-group">
+            <label for="comment_content">{{t('strings.comment')}}</label>
+            <textarea rows="8" required id="comment_content" name="content" class="form-control large"></textarea>
+        </div>
+        <div class="input-group">
+            <input type="submit" value="{{t('strings.add_comment',['fullname'=>\Auth::user()->full_name])}}" class="btn btn-primary" />
+        </div>
+    </div>
+{{ Form::close() }}
+@endif

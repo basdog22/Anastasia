@@ -1,0 +1,32 @@
+
+<div class="row">
+    <div class="col-lg-8 col-lg-offset-2">
+        {{ Form::open(array('url'=>'users/newgroup', 'class'=>'form-newmenu')) }}
+        <h2 class="form-signin-heading">{{ t('strings.new_user_group') }}</h2>
+        {{ Form::label(t('strings.name')) }}
+        {{ Form::text('name', null, array('class'=>'form-control', 'placeholder'=>t('strings.name'))) }}
+        {{ Form::label(t('strings.permissions')) }}
+        <div class="clearfix"></div>
+        <table class="col-sm-12">
+            <tr>
+                <td class="col-sm-2 center">{{t('strings.root')}}</td>
+                <td class="col-sm-2 center">{{t('strings.admin')}}</td>
+                <td class="col-sm-2 center">{{t('strings.editor')}}</td>
+                <td class="col-sm-2 center">{{t('strings.author')}}</td>
+                <td class="col-sm-2 center">{{t('strings.member')}}</td>
+            </tr>
+            <tr>
+                <td class="col-sm-2 center"><input  type="checkbox" value="1" name="perms[root]"  /></td>
+                <td class="col-sm-2 center"><input  type="checkbox" value="1" name="perms[admin]"  /></td>
+                <td class="col-sm-2 center"><input  type="checkbox" value="1" name="perms[editor]" /></td>
+                <td class="col-sm-2 center"><input  type="checkbox" value="1" name="perms[author]" /></td>
+                <td class="col-sm-2 center"><input  type="checkbox" value="1" name="perms[member]" /></td>
+            </tr>
+        </table>
+        <div class="clearfix"></div>
+        {{ Form::submit(t('strings.add_user_group'), array('class'=>'btn btn-large btn-primary'))}}
+        {{ Form::close() }}
+    </div>
+
+</div>
+

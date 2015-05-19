@@ -1,0 +1,13 @@
+<div class="col-md-12">
+    <div class="col-md-2">
+        <img class="img-responsive thumbnail" src="{{$item->image->url(200)}}" alt="{{{$post->title}}}"/>
+        {{t('strings.comments')}} {{comments_count($item)}}
+    </div>
+    <div class="col-md-10">
+        <h2><a href="{{url($item->slug)}}" rel="bookmark">{{$item->title}}</a></h2>
+        <div>
+            {{the_excerpt($item->content,100)}}
+        </div>
+    </div>
+
+</div>

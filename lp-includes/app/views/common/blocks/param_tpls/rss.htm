@@ -1,0 +1,5 @@
+{{ Form::label(t('strings.url')) }}
+{{ Form::text('params[url]',$params['url']) }}
+<div class="clearfix"></div>
+{{ Form::label(t('strings.number')) }}
+{{ Form::selectRange('params[num]',1,20,$params['num']) }}

@@ -1,0 +1,91 @@
+<div class="row">
+    <div class="col-xs-12">
+        <div class="box">
+            <div class="box-header">
+                <div class="box-name">
+                    <i class="fa fa-cogs"></i>
+                    <span>{{ t('strings.comments') }}</span>
+                </div>
+                <div class="box-icons col-sm-9">
+                    <span class="pull-left col-sm-9">
+                        <a href="{{url('backend/comments')}}">
+                            <i class="fa fa-file-o"></i>
+                            <span>{{ t('posts::strings.all') }}</span>
+                        </a>
+                        <a href="{{url('backend/comments/1')}}">
+                            <i class="fa fa-file"></i>
+                            <span>{{ t('posts::strings.published') }}</span>
+                        </a>
+                         <a href="{{url('backend/comments/0')}}">
+                             <i class="fa fa-file"></i>
+                             <span>{{ t('posts::strings.draft') }}</span>
+                         </a>
+
+                    </span>
+                </div>
+                <div class="no-move"></div>
+            </div>
+            <div class="box-content no-padding">
+                {{ $comments->links() }}
+                <table class="table table-bordered table-striped table-hover table-heading table-datatable" id="addonstable">
+                    <thead>
+                    <tr>
+                        <th><input type="checkbox" class="checkall"></th>
+                        <th class="title-cell">{{ t('strings.title') }}</th>
+                        <th>{{ t('strings.status') }}</th>
+                        <th>{{ t('strings.author') }}</th>
+                        <th>{{ t('strings.dates') }}</th>
+                        <th id="actions_container" data-base="{{url('backend/comments')}}" data-actions="edit,delete,approve,disapprove">{{ t('strings.actions') }}</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    @foreach ($comments as $post)
+                    <tr>
+                        <td><input type="checkbox" class="checkme" value="{{ $post->id }}"></td>
+                        <td>
+                            <a href="{{ url('backend/comments/edit/'.$post->id) }}">{{ $post->title }}</a>
+                            <br/><label class="label label-info">{{t('strings.at')}}</label><br/>
+                            <a target="_blank" href="{{url($post->item->slug)}}">{{$post->item->title}}</a>
+                        </td>
+                        <td>{{ ($post->status)?t('strings.published'):t('strings.draft') }}</td>
+                        <td>{{ $post->user->full_name }}</td>
+                        <td>{{ $post->updated_at }}</td>
+                        <td>
+                            <div class="btn-group">
+                                <a class="btn btn-default modal-link" href="{{ url('backend/comments/edit/'.$post->id) }}">{{ t('strings.edit') }}</a>
+                                @if($post->status)
+                                <a class="btn btn-default" href="{{ url('backend/comments/disapprove/'.$post->id) }}">{{ t('strings.disapprove') }}</a>
+                                @else
+                                <a class="btn btn-default" href="{{ url('backend/comments/approve/'.$post->id) }}">{{ t('strings.approve') }}</a>
+                                @endif
+                                <a class="btn btn-danger delbtn" href="{{ url('backend/comments/delete/'.$post->id) }}">{{ t('strings.delete') }}</a>
+                            </div>
+                        </td>
+                    </tr>
+                    @endforeach
+
+
+                    <!-- End: list_row -->
+                    </tbody>
+                    <tfoot>
+                    <tr>
+                        <th><input type="checkbox" class="checkall"></th>
+                        <th>{{ t('strings.title') }}</th>
+                        <th>{{ t('strings.status') }}</th>
+                        <th>{{ t('strings.created_at') }}</th>
+                        <th>{{ t('strings.updated_at') }}</th>
+                        <th>{{ t('strings.actions') }}</th>
+                    </tr>
+                    </tfoot>
+                </table>
+                {{ $comments->links() }}
+            </div>
+            <div class="box-footer">
+                <select class="bulk_actions no-select2">
+                    <option value="0">{{t('strings.with_selected')}}</option>
+                </select>
+            </div>
+        </div>
+    </div>
+</div>
+

@@ -1,0 +1,237 @@
+<div class="row">
+    {{ Form::open(array('url'=>'backend/posts/create', 'class'=>'form-newpage')) }}
+    <div class="col-md-9">
+        <div class="col-md-12 box widget-box">
+            <div class="box-header handle">
+                <div class="box-name">
+                    <span>
+                        @if(isset($post->id))
+                        {{ t('strings.edit') }}
+                        @else
+                        {{ t('posts::strings.new_post') }}
+                        @endif
+                    </span>
+                </div>
+            </div>
+            <div class="box-content">
+                @if(isset($post->id))
+                {{ Form::hidden('postid', $post->id) }}
+                {{ Form::label(t('strings.title')) }}
+                {{ Form::text('title', $post->title, array('class'=>'form-control','placeholder'=>t('strings.title'))) }}
+
+                {{ place_slug($post) }}
+                {{ Form::label(t('strings.content')) }}
+                {{ Form::textarea('content', $post->content , array('class'=>'form-control rte','id'=>'post-content','placeholder'=>t('strings.content'))) }}
+                @else
+
+                {{ Form::label(t('strings.title')) }}
+                {{ Form::text('title', null, array('class'=>'form-control', 'placeholder'=>t('strings.title')))}}
+                {{ Form::label(t('strings.content')) }}
+                {{ Form::textarea('content', null , array('class'=>'form-control rte','id'=>'post-content','placeholder'=>t('strings.content'))) }}
+
+
+                @endif
+            </div>
+        </div>
+        <div class="col-md-12 box widget-box">
+            <div class="box-header">
+                <div class="box-name">
+                    <span>{{t('strings.metadata')}}</span>
+                </div>
+            </div>
+            <div class="box-content">
+                <div class="row ">
+                    <table class="table table-bordered table-striped table-hover table-heading hastools" id="addonstable">
+                        <thead>
+                        <tr>
+                            <th><input type="checkbox" class="checkall"> </th>
+                            <th>{{ t('strings.name') }}</th>
+                            <th>{{ t('strings.value') }}</th>
+                        </tr>
+                        </thead>
+
+                        <tr class="cloneme removeme">
+                            <th>#</th>
+                            <th> {{ Form::text('newmetas[0][name]',null,['class'=>'form-control','placeholder'=>t('strings.name')]) }}</th>
+                            <th>{{ Form::textarea('newmetas[0][value]',null,['class'=>'form-control','placeholder'=>t('strings.value')]) }}</th>
+                        </tr>
+
+                        <tbody>
+                        @foreach($post->default_metas as $k=>$meta)
+                        <tr class="removeme">
+                            <th>#</th>
+                            <th>{{ Form::text("metas[d{$k}][name]",$meta['name'],['class'=>'form-control','placeholder'=>t('strings.name')]) }}</th>
+                            <th>{{ Form::textarea("metas[d{$k}][value]",'',['class'=>'form-control','placeholder'=>t('strings.value')]) }}</th>
+                        </tr>
+                        @endforeach
+                        @foreach($post->metas as $meta)
+                        <tr class="removeme">
+                            <th><input type="checkbox" class="checkme" value="{{$meta->id}}"> </th>
+                            <th>{{ Form::text("metas[$meta->id][name]",$meta->name,['class'=>'form-control','placeholder'=>t('strings.name')]) }}</th>
+                            <th>{{ Form::textarea("metas[$meta->id][value]",$post->meta($meta->name),['class'=>'form-control','placeholder'=>t('strings.value')]) }}</th>
+                        </tr>
+                        @endforeach
+                        </tbody>
+                        <tfoot>
+                        <tr>
+                            <th><input type="checkbox" class="checkall"> </th>
+                            <th>{{ t('strings.name') }}</th>
+                            <th>{{ t('strings.value') }}</th>
+                        </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12 box widget-box">
+            <div class="box-header">
+                <div class="box-name">
+                    <span>{{t('strings.revision_history')}}</span>
+                </div>
+            </div>
+            <div class="box-content">
+                <div class="row">
+                    <table class="col-md-12">
+                        <thead>
+                        <th>{{ t('strings.firstname') }} {{ t('strings.lastname') }}</th>
+                        <th>{{ t('strings.field')}}</th>
+                        <th>{{ t('strings.updated_at') }}</th>
+                        <th>{{ t('strings.actions') }}</th>
+                        </thead>
+                        <tbody>
+
+
+                        @foreach($post->revisionHistory as $history )
+                        <tr>
+                            <td><a class="btn btn-primary modal-link"
+                                   href="{{ url('users/profile/'.$history->userResponsible()->id)}}">{{
+                                $history->userResponsible()->firstname }}</a></td>
+                            <td>{{ $history->fieldName() }}</td>
+                            <td>{{ $history->created_at }}</td>
+                            <td>
+                                <div class="btn-group">
+                                    <a href="{{ url('backend/revisions/view/'.$history->id) }}"
+                                       class="btn btn-primary modal-link">{{t('strings.view')}}</a>
+                                </div>
+                            </td>
+
+
+                        </tr>
+                        @endforeach
+
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="row">
+            <div class="col-md-11 box widget-box">
+                <div class="box-header handle">
+                    <div class="box-name">
+                        <span>{{ t('posts::strings.publish') }}</span>
+                    </div>
+                    <div class="box-icons">
+                        <a href="#" class="move-activ"><i class="fa fa-arrows "></i></a>
+                    </div>
+                </div>
+                <div class="box-content">
+                    @if(isset($post->id))
+
+                    {{ Form::label(t('posts::strings.post_status')) }}
+                    {{ Form::checkbox('status', 1,($post->status=='1')?true:false) }}
+                    <div class="clearfix"></div>
+                    {{ Form::submit(t('strings.save'), array('class'=>'btn btn-large btn-primary'))}}
+                    {{ Form::submit(t('strings.save_close'), array('class'=>'btn btn-large
+                    btn-primary','name'=>'saveclose'))}}
+
+                    @else
+
+                    {{ Form::label(t('posts::strings.post_status')) }}
+                    {{ Form::checkbox('status', 1, true) }}
+                    <div class="clearfix"></div>
+                    {{ Form::submit(t('strings.add'), array('class'=>'btn btn-large btn-primary'))}}
+                    {{ Form::submit(t('strings.add_close'), array('class'=>'btn btn-large
+                    btn-primary','name'=>'saveclose'))}}
+                    @endif
+                </div>
+            </div>
+        </div>
+        <div class="row sortable" id="posts_widgets" rel="{{url('backend/posts')}}/">
+            <div class="col-md-11 box widget-box" id="posts_category_box">
+                <div class="box-header handle">
+                    <div class="box-name">
+                        <span>{{ t('posts::strings.category') }}</span>
+                    </div>
+                    <div class="box-icons">
+                        <a href="#" class="move-activ"><i class="fa fa-arrows "></i></a>
+                    </div>
+                </div>
+                <div class="box-content">
+                    @if(isset($post->category))
+                    <label class="label label-info">{{t('posts::strings.current_category')}}:
+                        {{$post->category->title}}</label>
+
+                    <div class="clearfix">&nbsp;</div>
+                    @endif
+                    <select name="category_id" class="">
+                        <option selected value="0">{{ t('strings.please_select') }}</option>
+                        {{$categories}}
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-11 box widget-box" id="posts_tags_box">
+                <div class="box-header handle">
+                    <div class="box-name">
+                        <span>{{ t('strings.tags') }}</span>
+                    </div>
+                    <div class="box-icons">
+                        <a href="#" class="move-activ"><i class="fa fa-arrows "></i></a>
+                    </div>
+                </div>
+                <div class="box-content">
+                    <input type="text" id="tags" class="form-control" value="{{implode(',',$tags)}}" name="tags"/>
+                    <button class="btn btn-default" type="button" id="addtag" data-pid="{{$post->id}}">
+                        {{t('strings.add')}}
+                    </button>
+
+                </div>
+                <div class="box-content" id="tags_container">
+                    @if(isset($post->id))
+                    @foreach($tags as $tag)
+                    <label class="label label-info">{{$tag}} <a href="#" class="fa fa-close dettach"
+                                                                data-pid="{{$post->id}}" data-tag="{{$tag}}"></a>
+                    </label>
+                    @endforeach
+                    @endif
+                </div>
+            </div>
+            <div class="col-md-11 box widget-box" id="posts_image_box">
+                <div class="box-header handle">
+                    <div class="box-name">
+                        <span>{{ t('strings.image') }}</span>
+                    </div>
+                    <div class="box-icons">
+                        <a href="#" class="move-activ"><i class="fa fa-arrows "></i></a>
+                    </div>
+                </div>
+                <div class="box-content">
+                    @if(isset($post->image->id))
+                    <img id="image_preview" src="{{$post->image->url(300)}}" class="thumbnail img-responsive"/>
+
+                    <div class="clearfix">&nbsp;</div>
+                    {{ Form::hidden('image_id', $post->image->url(),['id'=>'image']) }}
+                    @else
+                    {{ Form::hidden('image_id', '',['id'=>'image']) }}
+                    <img id="image_preview" src="http://placehold.it/400x200" class="thumbnail img-responsive"/>
+                    @endif
+                    <a href="#" data-inputid="image" class="btn btn-info popup_selector">{{t('strings.please_select')}}</a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    {{ Form::close() }}
+</div>

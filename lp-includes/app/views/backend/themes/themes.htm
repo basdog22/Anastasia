@@ -1,0 +1,64 @@
+<div class="row">
+    <div class="col-xs-12">
+        <div class="box">
+            <div class="box-header">
+                <div class="box-name">
+                    <i class="fa fa-cogs"></i>
+                    <span>{{ t('strings.themes') }}</span>
+                    <span><input type="checkbox" class="checkall"></span>
+                </div>
+                <div class="box-icons">
+                    <select class="bulk_actions no-select2">
+                        <option value="0">{{t('strings.with_selected')}}</option>
+                    </select>
+                    <a href="{{url('themes/new')}}" class="modal-link" style="width: auto">
+                        <i class="fa fa-plus"></i>
+                        {{ t('strings.new_theme') }}
+                    </a>
+
+                </div>
+                <div class="no-move"></div>
+            </div>
+            <div class="box-content no-padding clearfix" id="actions_container" data-base="{{url('themes/manage')}}" data-actions="install,uninstall">
+                @foreach ($themes as $theme)
+                <div class="box col-md-3 no-padding widget-box">
+                    <div class="box-header">
+                        <div class="box-name">
+                            <span>{{$theme->title}}</span>
+                        </div>
+                        <div class="box-icons" >
+                            <span title="{{ t('strings.version') }}" class="ttips badge bg-primary">v{{ $theme->version }}</span>
+                            <span title="{{ t('strings.installed') }}" class="ttips badge bg-{{ ($theme->installed)?'success':'danger' }}"><i class="fa fa-{{ ($theme->installed)?'check':'close' }}"></i> </span>
+                            @if($theme->installed && $theme->active)
+                            <label class="label label-success ttips" title="{{t('strings.default')}}">{{ $theme->id }}</label>
+                            @else
+                            <input type="checkbox" class="checkme checkbox-inline" value="{{ $theme->id }}">
+                            @endif
+                        </div>
+                    </div>
+
+                    <div class="box-content scrollbars">
+                        <a target="_blank" href="{{ url($theme->url) }}" style="display:block;background: url('{{ $theme->image }}');background-size:100%;width: 100%; height: 200px" ></a>
+                    </div>
+                    <div class="box-footer">
+                        <div class="btn-group">
+                            <a class="btn btn-{{ ($theme->installed)?'danger':'success' }}" href="{{ ($theme->installed)?url('themes/uninstall/'.$theme->id):url('themes/install/'.$theme->id)}}">
+                                {{ ($theme->installed)?t('strings.uninstall'):t('strings.install') }}
+                            </a>
+                            <a class="btn btn-warning" href="{{ url('themes/edit/'.$theme->id) }}">
+                                {{ t('strings.edit') }}
+                            </a>
+                            @if($theme->installed && !$theme->active)
+                            <a class="btn btn-success" href="{{ url('themes/activate/'.$theme->id) }}">{{ t('strings.set_default') }}</a>
+                            @endif
+                        </div>
+                    </div>
+                </div>
+                @endforeach
+
+            </div>
+
+        </div>
+    </div>
+</div>
+

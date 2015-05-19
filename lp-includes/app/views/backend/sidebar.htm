@@ -1,0 +1,23 @@
+<div id="sidebar-left" class="col-xs-2 col-sm-2">
+    <ul class="nav main-menu">
+        <li>
+            <a href="{{ url('backend/dashboard') }}" class="active ajax-link">
+                <i class="fa fa-dashboard"></i>
+                <span class="hidden-xs">{{ t('strings.dashboard') }}</span>
+            </a>
+        </li>
+        <li>
+            <a href="{{ url('backend/pages') }}" class="ajax-link">
+                <i class="fa fa-edit"></i>
+                <span class="hidden-xs">{{ t('strings.pages') }}</span>
+            </a>
+        </li>
+        <li>
+            <a href="{{ url('backend/comments') }}" class="ajax-link">
+                <i class="fa fa-comment"></i>
+                <span class="hidden-xs">{{ t('strings.comments') }}</span>
+            </a>
+        </li>
+        {{$sidebarmenu}}
+    </ul>
+</div>

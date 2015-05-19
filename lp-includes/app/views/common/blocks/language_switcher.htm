@@ -1,0 +1,15 @@
+<div class="btn-group">
+<button type="button" class="btn no-margin btn-default btn-xs"><img src="{{home_url().'/lp-includes/app/lang/'.get_current_locale().'/'.get_current_locale().'.png'}}"></button>
+    <button type="button" class="btn no-margin btn-default dropdown-toggle btn-xs" data-toggle="dropdown" aria-expanded="false">
+        <span class="caret"></span>
+        <span class="sr-only">{{t('strings.select_language')}}</span>
+    </button>
+    <ul class="dropdown-menu" role="menu">
+        @foreach(get_available_locales() as $locale)
+        <li><a href="{{locale_url(0,$locale)}}">
+            <span><img src="{{home_url().'/lp-includes/app/lang/'.$locale.'/'.$locale.'.png'}}" ></span>
+            {{t('strings.'.$locale)}}
+        </a></li>
+        @endforeach
+    </ul>
+</div>

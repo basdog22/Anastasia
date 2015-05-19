@@ -1,0 +1,38 @@
+{{ HTML::style(Config::get("settings.cms.rel_includes").'/app/views/layouts/backend/plugins/bootstrap/bootstrap.css') }}
+{{ HTML::style(Config::get("settings.cms.rel_includes").'/app/views/layouts/backend/plugins/jquery-ui/jquery-ui.css') }}
+{{ HTML::style(Config::get("settings.cms.rel_includes").'/app/views/layouts/backend/plugins/timepicker/css/bootstrap-timepicker.min.css') }}
+{{ HTML::style('//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css') }}
+{{ HTML::style('http://fonts.googleapis.com/css?family=Righteous') }}
+{{ HTML::style(Config::get("settings.cms.rel_includes").'/app/views/layouts/backend/plugins/fancybox/jquery.fancybox.css') }}
+{{ HTML::style(Config::get("settings.cms.rel_includes").'/app/views/layouts/backend/plugins/fullcalendar/fullcalendar.css') }}
+{{ HTML::style(Config::get("settings.cms.rel_includes").'/app/views/layouts/backend/plugins/xcharts/xcharts.min.css') }}
+{{ HTML::style(Config::get("settings.cms.rel_includes").'/app/views/layouts/backend/plugins/select2/select2.css') }}
+{{ HTML::style(Config::get("settings.cms.rel_includes").'/app/views/layouts/backend/css/style.css') }}
+<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!--[if lt IE 9]>
+<script src="http://getbootstrap.com/docs-assets/js/html5shiv.js"></script>
+<script src="http://getbootstrap.com/docs-assets/js/respond.min.js"></script>
+<![endif]-->
+{{ HTML::script(Config::get("settings.cms.rel_includes").'/app/views/layouts/backend/plugins/jquery/jquery-2.1.0.min.js') }}
+{{ HTML::script(Config::get("settings.cms.rel_includes").'/app/views/layouts/backend/plugins/jquery/jquery-migrate-1.2.1.min.js') }}
+{{ HTML::script(Config::get("settings.cms.rel_includes").'/app/views/layouts/backend/plugins/moment/moment.min.js') }}
+{{ HTML::script(Config::get("settings.cms.rel_includes").'/app/views/layouts/backend/plugins/jquery/jquery.cookie.js') }}
+{{ HTML::script(Config::get("settings.cms.rel_includes").'/app/views/layouts/backend/plugins/slimScroll/jquery.slimscroll.min.js') }}
+{{ HTML::script(Config::get("settings.cms.rel_includes").'/app/views/layouts/backend/plugins/jquery/mousetrap.js') }}
+{{ HTML::script(Config::get("settings.cms.rel_includes").'/app/views/layouts/backend/plugins/jquery-ui/jquery-ui.min.js') }}
+{{ HTML::script(Config::get("settings.cms.rel_includes").'/app/views/layouts/backend/plugins/bootstrap/bootstrap.min.js') }}
+
+{{ HTML::script(Config::get("settings.cms.rel_includes").'/app/views/layouts/backend/plugins/justified-gallery/jquery.justifiedgallery.min.js') }}
+{{ HTML::script(Config::get("settings.cms.rel_includes").'/app/views/layouts/backend/plugins/timepicker/js/bootstrap-timepicker.min.js') }}
+{{ HTML::script(Config::get("settings.cms.rel_includes").'/app/views/layouts/backend/plugins/jquery/nestable.js') }}
+{{ HTML::script(Config::get("settings.cms.rel_includes").'/app/views/layouts/backend/plugins/select2/select2.min.js') }}
+{{ HTML::script(Config::get("settings.cms.rel_includes").'/app/views/layouts/backend/plugins/datatables/jquery.dataTables.js') }}
+{{ HTML::script(Config::get("settings.cms.rel_includes").'/app/views/layouts/backend/plugins/datatables/dataTables.bootstrap.js') }}
+{{ HTML::script(Config::get("settings.cms.rel_includes").'/app/views/layouts/backend/lp-funcs.js') }}
+<script>
+    var lara,lang;
+    lara = {{ json_encode(Config::get('settings'))}};
+    lang_strings = {{ json_encode(\Lang::get('strings')) }};
+    lang_messages = {{ json_encode(\Lang::get('messages')) }};
+</script>
+{{ $headeritems }}

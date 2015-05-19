@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>{{Config::get('settings.cms.title')}}</title>
+    <meta name="description" content="description">
+    <meta name="author" content="DevOOPS">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="csrf-token" content="{{ csrf_token() }}" />
+    {{ $header }}
+</head>
+<body>
+<div id="screensaver">
+    <canvas id="canvas"></canvas>
+    <i class="fa fa-lock" id="screen_unlock"></i>
+</div>
+{{ $navbar }}
+<!--End Header-->
+<!--Start Container-->
+<div id="main" class="container-fluid">
+    <div class="row">
+
+        {{ $sidebar }}
+
+        <!--Start Content-->
+        <div id="content" class="col-xs-12 col-sm-10">
+
+            <div class="row">
+                <div id="breadcrumb" class="col-md-12">
+
+                    <div class="col-md-8">
+                        {{show_breadcrumb()}}
+                    </div>
+                    <div class="col-md-2">
+                        <div class="btn-group">
+                            <button type="button" class="btn no-margin btn-default">
+                                <img src="{{home_url().'/lp-includes/app/lang/'.get_current_locale().'/'.get_current_locale().'.png'}}">
+                                {{t('strings.'.get_current_locale())}}
+                            </button>
+                            <button type="button" class="btn no-margin btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                <span class="caret"></span>
+                                <span class="sr-only">{{t('strings.select_language')}}</span>
+                            </button>
+                            <ul class="dropdown-menu" role="menu">
+                                @foreach(get_available_locales() as $locale)
+                                <li><a href="{{URL::current()}}?locale={{$locale}}">
+                                    <span><img src="{{home_url().'/lp-includes/app/lang/'.$locale.'/'.$locale.'.png'}}" ></span>
+                                    {{t('strings.'.$locale)}}
+                                </a></li>
+                                @endforeach
+                                <li class="divider"></li>
+                                <li>
+                                    <a class="dialog-submitter" data-title="{{t('strings.title')}}" href="{{url('backend/locales/add/')}}">
+                                        <i class="fa fa-plus"></i>
+                                        {{t('strings.add')}}</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <a href="{{ url('backend/maintenance')}}/{{(App::isDownForMaintenance())?'up':'down'}}" class="col-md-2 pull-right">
+                            <i data-placement="bottom" title="{{(App::isDownForMaintenance())?t('strings.exit_maintenance'):t('strings.enter_maintenance')}}" class="warnbtn ttips fa fa-inverse fa-{{(App::isDownForMaintenance())?'globe':'power-off'}}"></i>
+                        </a>
+                    <!--</div>-->
+                    <!--<div class="col-md-1">-->
+
+                    <!--</div>-->
+                    <!--<div class="col-md-1 hidden-xs hidden-sm">-->
+                        <a href="{{home_url()}}" target="_blank" class="col-md-1" >
+                            <i class="fa fa-eye fa-lg fa-inverse ttips" data-placement="bottom" title="{{t('strings.view_site')}}"></i>
+                        </a>
+                        <a href="#"  data-target="#help_contents" data-toggle="modal" class="col-md-1">
+                            <i class="fa fa-life-ring fa-lg text-danger"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+            </div>
+
+            <div id="notifications-container">
+                @if(Session::has('message'))
+                {{ Session::get('message') }}
+                @endif
+            </div>
+
+            {{ $content }}
+
+        </div>
+        <!--End Content-->
+    </div>
+</div>
+<div class="modal fade" id="laraModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <!-- content dynamically inserted -->
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="help_contents" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">{{t('strings.help')}}</h4>
+            </div>
+            <div class="modal-body scrollbars">
+                {{get_help_contents()}}
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">{{t('strings.close')}}</button>
+            </div>
+        </div>
+    </div>
+</div>
+{{ $footer }}
+
+</body>
+</html>

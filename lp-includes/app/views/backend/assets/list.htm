@@ -1,0 +1,5 @@
+<select id="file">
+    @foreach($files as $file)
+    <option value="{{$file->id}}">{{$file->filename}} </option>
+    @endforeach
+</select>

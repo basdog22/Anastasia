@@ -1,0 +1,51 @@
+{
+    "name": "basdog22/anastasia",
+    "description": "Anastasia Publishing Platform",
+    "keywords": ["cms", "laravel","app","anastasia","php"],
+    "license": "APACHE",
+    "type": "project",
+
+    "authors": [
+        {
+            "name": "basdog22",
+            "email": "basdog22@gmail.com",
+            "homepage": "http://www.bonweb.gr",
+            "role": "Developer"
+        }
+    ],
+
+    "require": {
+        "basdog22/anastasia": "dev-master"
+    },
+    "autoload": {
+        "classmap": [
+            "lp-includes/app/commands",
+            "lp-includes/app/controllers",
+            "lp-includes/app/models",
+            "lp-includes/app/helpers",
+            "lp-includes/app/database/migrations",
+            "lp-includes/app/database/seeds"
+        ],"psr-4":{
+            "Plugins\\": "lp-content/plugins",
+            "Themes\\": "lp-content/themes"
+        }
+    },
+    "scripts": {
+        "post-install-cmd": [
+            "php lp-includes/artisan clear-compiled",
+            "php lp-includes/artisan optimize"
+        ],
+        "post-update-cmd": [
+            "php lp-includes/artisan clear-compiled",
+            "php lp-includes/artisan optimize"
+        ],
+        "post-create-project-cmd": [
+            "php lp-includes/artisan key:generate"
+        ]
+    },
+    "config": {
+        "preferred-install": "dist",
+        "vendor-dir":"lp-includes/vendor"
+    },
+    "minimum-stability": "dev"
+}

@@ -1,0 +1,93 @@
+<div class="row">
+    <div id="gridmanager" class="col-md-12">
+        <div class="box">
+            <div class="box-header">
+                <div class="box-name">
+                    <i class="fa fa-search"></i>
+                    <span>{{ t('strings.gridmanager') }}</span>
+                </div>
+
+            </div>
+            <div class="box-content">
+                <div id="tabs">
+                    <ul>
+                        @foreach($layouts as $grids)
+                        @foreach($grids as $grid)
+                        <li><a style="padding-right: 30px" href="#grid_{{ $grid['name'] }}">{{ t($grid['title']) }}</a> </li>
+                        @endforeach
+                        @endforeach
+                    </ul>
+                    @foreach($layouts as $grids)
+                    @foreach($grids as $grid)
+
+                    <div id="grid_{{ $grid['name'] }}" class="clearfix">
+                        @foreach(get_theme_positions($grid) as $k=>$position)
+                        @if(!$position['is_default'] || ($position['is_default'] && $grid['name']=='default'))
+                        <div class="box clearfix " id="{{$k}}">
+                            <div class="box-header">{{t($position['title'])}}</div>
+                            <div class="box-content clearfix ">
+
+                                @foreach($position['grids'] as $b=>$block)
+                                <div id="bgrid-{{$b}}" class="col-md-{{$block['cols']}} @if(isset($block['offset']))
+                                 col-md-offset-{{$block['offset']}}
+                                 @endif
+                                 @if(isset($block['pull']))
+                                 pull-{{$block['pull']}}
+                                 @endif
+                                 box">
+                                    <div class="box-header">
+                                        <div class="box-name">
+                                            <span>({{$b}}) {{ t($block['title']) }}</span>
+                                        </div>
+                                        <div class="box-icons">
+                                            <a class="modal-link pull-right ttips" title="{{t('strings.add_block')}}" href="{{ url('backend/blockmanager/addblock/'.$b.'-'.$grid['name'].'-'.$k) }}"><i class="fa fa-plus "></i></a>
+                                        </div>
+                                    </div>
+                                    <div class="box-content drop sortblocks">
+                                        @foreach(get_blocks($b,$grid['name'],$k) as $blocks)
+
+                                        <div class="box drg box-block" id="{{$blocks->id}}">
+                                            <div class="box-header handle">
+                                                <div class="box-name">
+                                                    @if(isset(get_block_info($blocks->name)['icon']))
+                                                    <img src="{{get_block_info($blocks->name)['icon']}}" width="16" />
+                                                    @else
+                                                    <i class="fa fa-cog"></i>
+                                                    @endif
+                                                    <span>{{t($blocks->title)}}</span>
+                                                </div>
+                                                <div class="box-icons pull-right">
+                                                    <a class="move-activ" href="#"><i class="fa fa-arrows"></i> </a>
+                                                    @if(is_configurable_block($blocks))
+                                                    <a class="modal-link ttips" title="{{t('strings.edit')}}" href="{{ url('backend/blockmanager/editblock/'.$blocks->id) }}"><i class="fa fa-pencil "></i></a>
+                                                    @endif
+                                                    <a class="delbtn ttips" title="{{t('strings.delete')}}" href="{{ url('backend/blockmanager/delblock/'.$blocks->id) }}"><i class="fa fa-trash-o"></i></a>
+                                                </div>
+                                            </div>
+                                            <div class="box-content clearfix">
+                                                <span class="text-muted">{{t('strings.menuitem_sort')}}</span> <input class="auto-update-sort input-num" data-action="/backend/blockmanager/sort" id="{{ $blocks->id }}" type="number" value="{{ $blocks->order_weight }}" />
+                                            </div>
+                                        </div>
+
+                                        @endforeach
+                                    </div>
+                                </div>
+                                @endforeach
+                            </div>
+                        </div>
+                        @else
+                        <div class="box clearfix ">
+                            <p class="alert alert-default">
+                                {{t('strings.grid_manager_default_position',['position'=>t($position['title'])])}}
+                            </p>
+                        </div>
+                        @endif
+                        @endforeach
+                    </div>
+                    @endforeach
+                    @endforeach
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

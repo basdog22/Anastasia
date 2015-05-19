@@ -1,0 +1,80 @@
+<div style="margin: 5px;padding:0" class="box">
+    <div class="box-header">
+        <div class="box-name">
+            <span>{{ t('strings.search_results') }}</span>
+        </div>
+    </div>
+    <div class="box-content">
+        <div id="tabs">
+                <ul>
+                    @foreach($results as $k=>$sub)
+                    <li><a style="padding-right: 30px" href="#content_{{ $k }}">{{ $sub['content']['title'] }}</a></li>
+                    @endforeach
+                </ul>
+                @foreach($results as $k=>$sub)
+
+                <div id="content_{{$k}}">
+                    @if($sub['content']['type']=='asset')
+                    <div class="row clearfix">
+                    @else
+                    <ul class="nav nav-stacked">
+                    @endif
+                    @forelse($sub['data'] as $item)
+                        @if($sub['content']['slug']=='image')
+                        <div class="col-md-2">
+                            <a target="_blank" href="{{url('lp-content/files/'.$item->path)}}">
+                                <img src="{{url('lp-content/files/'.$item->path)}}" class="thumbnail img-responsive">
+                                {{$item->title}}
+                            </a>
+                        </div>
+                        @elseif($sub['content']['slug']=='audio')
+                        <div class="col-md-2">
+
+                            <a target="_blank" href="{{url($item->path)}}">
+                                <i class="fa fa-file-audio-o fa-xlx"></i>
+                                <p class="help-block">{{$item->title}}</p>
+                            </a>
+                        </div>
+                        @elseif($sub['content']['slug']=='video')
+                        <div class="col-md-2">
+
+                            <a target="_blank" href="{{url($item->path)}}">
+                                <i class="fa fa-file-movie-o fa-xlx"></i>
+                                <p class="help-block">{{$item->title}}</p>
+                            </a>
+                        </div>
+                        @elseif($sub['content']['slug']=='archive')
+                        <div class="col-md-2">
+
+                            <a target="_blank" href="{{url($item->path)}}">
+                                <i class="fa fa-file-archive-o fa-xlx"></i>
+                                <p class="help-block">{{$item->title}}</p>
+                            </a>
+                        </div>
+                        @elseif($sub['content']['slug']=='misc')
+                        <div class="col-md-2">
+
+                            <a target="_blank" href="{{url($item->path)}}">
+                                <i class="fa fa-file-text-o fa-xlx"></i>
+                                <p class="help-block">{{$item->title}}</p>
+                            </a>
+                        </div>
+                        @else
+                        <li><a href="{{ url('backend/'.$sub['content']['slug'].'/edit/'.$item->id) }}">{{$item->title}}</a></li>
+                        @endif
+                    @empty
+                    <li>{{t('strings.no_data_found')}}</li>
+                    @endforelse
+                    @if($sub['content']['type']=='asset')
+                    </div>
+                    @else
+                    </ul>
+                    {{$sub['data']->appends(array('search' => $q))->links()}}
+                    @endif
+
+                </div>
+                @endforeach
+            </div>
+    </div>                                                                                                                                                                                                                                                                                                                                                    </div>
+</div>
+<script> $("#tabs").tabs();</script>

@@ -1,0 +1,66 @@
+<div class="row">
+    <div class="col-xs-12">
+        <div class="box">
+            <div class="box-header">
+                <div class="box-name">
+                    <i class="fa fa-cogs"></i>
+                    <span>{{ t('strings.taxonomies') }}</span>
+                </div>
+                <div class="box-icons">
+                    <a href="{{url('backend/taxonomies/new')}}" class="modal-link" style="width: auto">
+                        <i class="fa fa-plus"></i>
+                        {{ t('strings.new_taxonomy') }}
+                    </a>
+
+                </div>
+                <div class="no-move"></div>
+            </div>
+            <div class="box-content no-padding">
+
+                <table class="table table-bordered table-striped table-hover table-heading table-datatable" id="addonstable">
+                    <thead>
+                    <tr>
+                        <th><input type="checkbox" class="checkall"> </th>
+                        <th>{{ t('strings.name') }}</th>
+                        <th>{{ t('strings.title') }}</th>
+                        <th id="actions_container" data-base="{{url('backend/taxonomies')}}" data-actions="edit,delete">{{ t('strings.actions') }}</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    @foreach ($taxonomies as $taxonomy)
+                    <tr>
+                        <td><input type="checkbox" class="checkme" value="{{ $taxonomy->id }}"> </td>
+                        <td><a href="{{ url('backend/taxonomies/browse/'.$taxonomy->id) }}">{{ $taxonomy->name }}</a></td>
+                        <td>{{ $taxonomy->title }}</td>
+                        <td>
+                            <div class="btn-group">
+                                <a class="btn btn-default modal-link" href="{{ url('backend/taxonomies/edit/'.$taxonomy->id) }}">{{ t('strings.edit') }}</a>
+                                <a class="btn btn-default" href="{{ url('backend/taxonomies/browse/'.$taxonomy->id) }}">{{ t('strings.sub_taxonomies') }}</a>
+                                <a class="btn btn-danger delbtn" href="{{ url('backend/taxonomies/delete/'.$taxonomy->id) }}">{{ t('strings.delete') }}</a>
+                            </div>
+                        </td>
+                    </tr>
+                    @endforeach
+
+
+                    <!-- End: list_row -->
+                    </tbody>
+                    <tfoot>
+                    <tr>
+                        <th><input type="checkbox" class="checkall"></th>
+                        <th>{{ t('strings.name') }}</th>
+                        <th>{{ t('strings.title') }}</th>
+                        <th>{{ t('strings.actions') }}</th>
+                    </tr>
+                    </tfoot>
+                </table>
+            </div>
+            <div class="box-footer">
+                <select class="bulk_actions no-select2">
+                    <option value="0">{{t('strings.with_selected')}}</option>
+                </select>
+            </div>
+        </div>
+    </div>
+</div>
+

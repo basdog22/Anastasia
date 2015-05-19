@@ -1,0 +1,8 @@
+{{ Form::open(array('url'=>'users/signin', 'class'=>'form-signin')) }}
+<h2 class="form-signin-heading">{{t('strings.login_please')}}</h2>
+
+{{ Form::text('email', null, array('class'=>'form-control', 'placeholder'=>t('strings.email_address'))) }}
+{{ Form::password('pass', array('class'=>'form-control', 'placeholder'=>t('strings.password'))) }}
+
+{{ Form::submit(t('strings.login'), array('class'=>'btn btn-large btn-primary btn-block'))}}
+{{ Form::close() }}

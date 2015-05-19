@@ -1,0 +1,56 @@
+
+{{ HTML::script(Config::get("settings.cms.rel_includes").'/packages/anastasia/tinymce/tinymce.min.js') }}
+<script>
+    tinymce.init({
+        selector: "textarea.rte",
+        relative_urls: false,
+        height:500,
+        remove_script_host: false,
+        file_browser_callback : elFinderBrowser,
+
+        plugins: [
+            "{{ Config::get('settings.cms.tinymce_plugins') }}"
+        ],
+        extended_valid_elements : "shortcode",
+        custom_elements: "shortcode",
+        content_css: "{{Config::get('themes.current.theme_url').'/editor.css'}}",
+        templates: {{get_theme_editor_templates()}},
+        template_replace_values: {
+            viewpath : "{{theme_url()}}"
+        },
+        toolbar: "undo redo | loadfile shortcodes template | link image | bold italic |  styleselect  | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent  | print preview media fullpage | forecolor backcolor emoticons"
+    });
+    tinymce.init({
+        selector: "textarea.tinyrte",
+        relative_urls: false,
+        remove_script_host: false,
+        file_browser_callback : elFinderBrowser,
+        plugins: [
+            "image link code media loadfile shortcodes template"
+        ],
+        menubar:false,
+        statusbar: false,
+        toolbar: "image link shortcodes template | bold italic | alignleft aligncenter alignright bullist numlist | code"
+    });
+
+
+
+
+    function elFinderBrowser (field_name, url, type, win) {
+        tinymce.activeEditor.windowManager.open({
+            file: '{{Config::get('app.url')}}/backend/filemanager/tinymce',// use an absolute path!
+            title: 'Anastasia Filemanager',
+            width: 900,
+            height: 450,
+            resizable: 'yes'
+        }, {
+            setUrl: function (url) {
+                win.document.getElementById(field_name).value = url;
+            }
+        });
+        //return false;
+    }
+</script>
+{{ $footeritems }}
+
+{{ HTML::script(Config::get("settings.cms.rel_includes").'/app/views/layouts/backend/lara.js') }}
