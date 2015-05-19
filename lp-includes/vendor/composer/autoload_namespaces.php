@@ -33,6 +33,7 @@ return array(
     'Psr\\Log\\' => array($vendorDir . '/psr/log'),
     'Predis' => array($vendorDir . '/predis/predis/lib'),
     'Pingpong\\Oembed' => array($vendorDir . '/pingpong/oembed/src'),
+    'Pimple' => array($vendorDir . '/pimple/pimple/src'),
     'Patchwork' => array($vendorDir . '/patchwork/utf8/class'),
     'PHPPowerPoint' => array($vendorDir . '/phpoffice/phppowerpoint/src'),
     'PHPParser' => array($vendorDir . '/nikic/php-parser/lib'),

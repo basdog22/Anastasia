@@ -34,8 +34,8 @@
         "barryvdh/laravel-translation-manager": "0.1.x",
         "orangehill/iseed":  "1.1",
         "way/generators": "~2.0",
-        "barryvdh/laravel-debugbar" : "~1.8"
-
+        "barryvdh/laravel-debugbar" : "~1.8",
+        "fairholm/elasticquent": "dev-master"
     },
 	"autoload": {
 		"classmap": [
